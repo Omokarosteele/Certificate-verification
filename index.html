@@ -4,89 +4,101 @@
     <meta charset="UTF-8">
     <title>TQUK Certificate Verification</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            margin:0;
-            padding:0;
-            background:#f5f5f5;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
         }
 
         header {
-            background:white;
-            padding:20px;
-            border-bottom:1px solid #ccc;
+            width: 100%;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 20px;
         }
 
         #container {
-            max-width:900px;
-            margin:auto;
-            background:white;
-            padding:30px;
-            margin-top:30px;
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
         }
 
-        .title {
-            font-size:26px;
-            font-weight:bold;
-            margin-bottom:10px;
+        h1 {
+            font-size: 26px;
+            margin-bottom: 10px;
         }
 
-        form label {
-            display:block;
-            margin-top:15px;
-            font-weight:bold;
+        p {
+            line-height: 1.5;
         }
 
-        form input {
-            width:100%;
-            padding:10px;
-            font-size:16px;
-            margin-top:4px;
-            border:1px solid #999;
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #888;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         button {
-            margin-top:20px;
-            width:100%;
-            padding:14px;
-            font-size:17px;
-            border:none;
-            background:black;
-            color:white;
-            cursor:pointer;
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            background: #000;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
         }
 
         #result {
-            margin-top:25px;
-            font-size:18px;
-            padding:15px;
-            border-radius:5px;
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 5px;
+            font-size: 17px;
         }
 
         footer {
-            text-align:center;
-            margin-top:60px;
-            padding:15px;
-            font-size:13px;
-            color:#666;
+            text-align: center;
+            padding: 28px;
+            margin-top: 60px;
+            font-size: 13px;
+            color: #666;
         }
     </style>
+
 </head>
 
 <body>
 
 <header>
-    <img src="tquk.png" width="180">
+    <img src="tquk.png" width="200">
 </header>
 
 <div id="container">
 
-    <p class="title">Certificate Verification</p>
+    <h1>Certificate Verification</h1>
 
     <p>Fill your details into the form on the right or scan the QR code in the bottom left of your certificate to verify it in seconds.</p>
 
     <form onsubmit="verify(); return false;">
+
         <label>Surname</label>
         <input type="text" id="surname">
 
@@ -97,6 +109,7 @@
         <input type="text" id="cert">
 
         <button type="submit">Check</button>
+
     </form>
 
     <div id="result"></div>
@@ -108,6 +121,7 @@ Company number: 07827508  |  Registered address: Crossgate House, Cross Street, 
 </footer>
 
 <script>
+
 function verify() {
 
     const surname = document.getElementById("surname").value.trim().toLowerCase();
@@ -119,20 +133,28 @@ function verify() {
         forenames === "samira ahmed alim" &&
         cert === "513-10458661-398825-20230515"
     ) {
-        document.getElementById("result").style.background="#c2ffc2";
+
+        document.getElementById("result").style.background = "#c7ffd1";
+        document.getElementById("result").style.border = "2px solid #008000";
+
         document.getElementById("result").innerHTML = `
-            <b>Verification successful</b><br><br>
-            Surname: Mohamoud<br>
-            Forenames: Samira Ahmed Alim<br>
-            Certificate Number: 513-10458661-398825-20230515
+        <strong>TQUK can confirm that the certificate information provided matches a valid TQUK certificate.</strong><br><br>
+        Surname: Mohamoud<br>
+        Forenames: Samira Ahmed Alim<br>
+        Certificate Number: 513-10458661-398825-20230515
         `;
+
     } else {
-        document.getElementById("result").style.background="#ffbebe";
-        document.getElementById("result").innerHTML = `
-            Student information not found.
-        `;
+
+        document.getElementById("result").style.background = "#ffbebe";
+        document.getElementById("result").style.border = "2px solid red";
+
+        document.getElementById("result").innerHTML = "Student information not found.";
+
     }
+
 }
+
 </script>
 
 </body>
