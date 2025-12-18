@@ -27,26 +27,26 @@ body {
 }
 
 .main-container h1 {
-  margin: 0 0 10px;
+  margin-bottom: 15px;
   font-size: 24px;
   color: #002663;
 }
 
 .main-container p {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 16px;
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-top: 12px;
   font-weight: bold;
 }
 
 input[type="text"] {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
+  margin-top: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -54,12 +54,12 @@ input[type="text"] {
 button {
   background: #002663;
   color: white;
-  padding: 12px 0;
+  padding: 12px;
   width: 100%;
-  font-size: 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 button:hover {
@@ -69,11 +69,8 @@ button:hover {
 #result {
   margin-top: 20px;
   font-size: 18px;
-}
-
-.verified {
-  color: green;
   font-weight: bold;
+  color: green;
 }
 
 footer {
@@ -81,4 +78,4 @@ footer {
   padding: 10px;
   color: #777;
   font-size: 14px;
-    }
+}
