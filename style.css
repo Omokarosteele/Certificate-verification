@@ -79,3 +79,16 @@ footer {
   color: #777;
   font-size: 14px;
 }
+.error {
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+.verified {
+  color: green;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 15px;
+}
