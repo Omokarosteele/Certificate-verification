@@ -92,3 +92,8 @@ footer {
   font-size: 18px;
   margin-top: 15px;
 }
+
+footer img {
+    display:block;
+    margin:auto;
+}
