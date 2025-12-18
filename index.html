@@ -21,7 +21,7 @@
   </p>
 
   <p>
-    Fill your details into the form below to verify it in seconds.
+    Fill your details <b>into the form below or scan the QR code<b> in the bottom left of your certificate to verify it in seconds.
   </p>
 
   <form id="verifyForm">
@@ -60,7 +60,7 @@ document.getElementById('verifyForm').addEventListener('submit', function(e) {
   {
     document.getElementById('result').innerHTML = `
       <p class="verified">
-      ✔️ Certificate Match Found<br><br>
+     ✅TQUK can confirm that the certificate information provided matches a valid TQUK certificate. <br><br>
       Name: <strong>Samira Ahmed Alim Mohamoud</strong><br>
       Certificate Number: <strong>${cert}</strong>
       </p>`;
@@ -75,6 +75,14 @@ document.getElementById('verifyForm').addEventListener('submit', function(e) {
 
 });
 </script>
+
+<footer>
+
+<img src="tquk.png" width="100">
+    Company number: 07827508  |
+    Registered address: Crossgate House, Cross Street, Sale, Manchester, M33 7FT  |
+    © 2025 TQUK. All Rights Reserved.
+</footer>
 
 </body>
 </html>
