@@ -1,160 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>TQUK Certificate Verification</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-        }
-
-        header {
-            width: 100%;
-            background: #fff;
-            border-bottom: 1px solid #ddd;
-            padding: 20px;
-        }
-
-        #container {
-            max-width: 900px;
-            margin: 30px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-        }
-
-        h1 {
-            font-size: 26px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            line-height: 1.5;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #888;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            width: 100%;
-            margin-top: 20px;
-            padding: 14px;
-            background: #000;
-            color: white;
-            font-size: 18px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        #result {
-            margin-top: 25px;
-            padding: 18px;
-            border-radius: 5px;
-            font-size: 17px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 28px;
-            margin-top: 60px;
-            font-size: 13px;
-            color: #666;
-        }
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Verification — Training Qualifications UK</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-    <img src="tquk.png" width="200">
-</header>
+<div class="header">
+  <img src="logo.png" alt="TQUK Logo" class="logo">
+</div>
 
-<div id="container">
+<div class="main-container">
 
-    <h1>Certificate Verification</h1>
+  <h1>Certificate Verification</h1>
 
-    <p>Fill your details into the form on the right or scan the QR code in the bottom left of your certificate to verify it in seconds.</p>
+  <p>
+    Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.
+  </p>
 
-    <form onsubmit="verify(); return false;">
+  <p>
+    Fill your details into the form below to verify it in seconds.
+  </p>
 
-        <label>Surname</label>
-        <input type="text" id="surname">
+  <form id="verifyForm">
 
-        <label>Forenames</label>
-        <input type="text" id="forenames">
+    <label>Forename</label>
+    <input id="forename" type="text" required>
 
-        <label>Certificate Number</label>
-        <input type="text" id="cert">
+    <label>Surname</label>
+    <input id="surname" type="text" required>
 
-        <button type="submit">Check</button>
+    <label>Certificate Number</label>
+    <input id="cert" type="text" required>
 
-    </form>
+    <button type="submit">Verify Certificate</button>
 
-    <div id="result"></div>
+  </form>
+
+  <div id="result"></div>
 
 </div>
 
-<footer>
-Company number: 07827508  |  Registered address: Crossgate House, Cross Street, Sale, Manchester, M33 7FT  |  © 2025 TQUK. All Rights Reserved.
-</footer>
-
 <script>
+document.getElementById('verifyForm').addEventListener('submit', function(e) {
 
-function verify() {
+  e.preventDefault();
 
-    const surname = document.getElementById("surname").value.trim().toLowerCase();
-    const forenames = document.getElementById("forenames").value.trim().toLowerCase();
-    const cert = document.getElementById("cert").value.trim();
+  const first = document.getElementById("forename").value.trim().toLowerCase();
+  const last  = document.getElementById("surname").value.trim().toLowerCase();
+  const cert  = document.getElementById("cert").value.trim();
 
-    if(
-        surname === "mohamoud" &&
-        forenames === "samira ahmed alim" &&
-        cert === "513-10458661-398825-20230515"
-    ) {
+  const correctFirst = "samira ahmed alim";
+  const correctLast  = "mohamoud";
+  const correctCert  = "513-10458661-398825-20230515";
 
-        document.getElementById("result").style.background = "#c7ffd1";
-        document.getElementById("result").style.border = "2px solid #008000";
+  if(first === correctFirst && last === correctLast && cert === correctCert)
+  {
+    document.getElementById('result').innerHTML = `
+      <p class="verified">
+      ✔️ Certificate Match Found<br><br>
+      Name: <strong>Samira Ahmed Alim Mohamoud</strong><br>
+      Certificate Number: <strong>${cert}</strong>
+      </p>`;
+  }
+  else
+  {
+    document.getElementById('result').innerHTML = `
+      <p class="error">
+      ❌ Student Information Not Found.
+      </p>`;
+  }
 
-        document.getElementById("result").innerHTML = `
-        <strong>TQUK can confirm that the certificate information provided matches a valid TQUK certificate.</strong><br><br>
-        Surname: Mohamoud<br>
-        Forenames: Samira Ahmed Alim<br>
-        Certificate Number: 513-10458661-398825-20230515
-        `;
-
-    } else {
-
-        document.getElementById("result").style.background = "#ffbebe";
-        document.getElementById("result").style.border = "2px solid red";
-
-        document.getElementById("result").innerHTML = "Student information not found.";
-
-    }
-
-}
-
+});
 </script>
 
 </body>
