@@ -260,21 +260,6 @@
             text-decoration: underline;
         }
         
-        /* Auto-fill Highlight */
-        .auto-filled {
-            background-color: #f0f9ff !important;
-            border-color: #1a237e !important;
-            font-weight: 600;
-        }
-        
-        .auto-fill-indicator {
-            font-size: 0.85rem;
-            color: #1a237e;
-            font-style: italic;
-            margin-top: 5px;
-            display: block;
-        }
-        
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -401,9 +386,14 @@
                 <p><strong>Important Note:</strong> Only certificates issued from 2018 onwards can be checked below. If your certificate is dated before 2018, please contact our Customer Service Specialists, who can support you with verifying your certificate.</p>
             </div>
             
-            <!-- Demo Certificate Info -->
-            <div class="highlight-box" style="background-color: #e8f6ff; border-left-color: #1a237e;">
-                <p><strong>Demo Certificate Loaded:</strong> The form has been auto-filled with Samira Ahmed's certificate details. Click "Verify Certificate" to see the validation result.</p>
+            <div style="margin-top: 40px;">
+                <h3>How to Find Your Certificate Details</h3>
+                <ul style="padding-left: 20px; margin-top: 15px;">
+                    <li style="margin-bottom: 10px;">Certificate number is located at the bottom right of your certificate</li>
+                    <li style="margin-bottom: 10px;">Ensure name matches exactly as shown on certificate</li>
+                    <li style="margin-bottom: 10px;">Check the issue date on your certificate</li>
+                    <li style="margin-bottom: 10px;">Select the correct qualification type from the dropdown</li>
+                </ul>
             </div>
             
             <!-- Success Message Area -->
@@ -424,25 +414,21 @@
                 <div class="form-group">
                     <label for="certificateNumber">Certificate Number *</label>
                     <input type="text" id="certificateNumber" name="certificateNumber" placeholder="Enter your certificate number" required>
-                    <span class="auto-fill-indicator">Auto-filled with demo certificate</span>
                 </div>
                 
                 <div class="form-group">
                     <label for="learnerName">Learner's Full Name *</label>
                     <input type="text" id="learnerName" name="learnerName" placeholder="Enter name as shown on certificate" required>
-                    <span class="auto-fill-indicator">Auto-filled with demo certificate</span>
                 </div>
                 
                 <div class="form-group">
                     <label for="dob">Date of Birth *</label>
                     <input type="date" id="dob" name="dob" required>
-                    <span class="auto-fill-indicator">Auto-filled with demo certificate</span>
                 </div>
                 
                 <div class="form-group">
                     <label for="certificateDate">Certificate Issue Date *</label>
                     <input type="date" id="certificateDate" name="certificateDate" required>
-                    <span class="auto-fill-indicator">Auto-filled with demo certificate</span>
                 </div>
                 
                 <div class="form-group">
@@ -456,16 +442,9 @@
                         <option value="level5">Level 5 Foundation Degree</option>
                         <option value="other">Other</option>
                     </select>
-                    <span class="auto-fill-indicator">Auto-filled with demo certificate</span>
                 </div>
                 
                 <button type="submit" class="verify-btn">Verify Certificate</button>
-                
-                <div style="margin-top: 15px; text-align: center;">
-                    <button type="button" id="clearForm" class="verify-btn" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%); margin-top: 10px;">
-                        Clear Form & Enter New Certificate
-                    </button>
-                </div>
             </form>
             
             <div class="highlight-box" style="margin-top: 30px;">
@@ -499,7 +478,7 @@
             certNumber: "1622-10682337-592729-20250110",
             dob: "1981-08-06", // August 6th 1981
             issueDate: "2025-12-19", // 19/12/2025
-            qualification: "Level 4 Higher Diploma", // This matches the dropdown value
+            qualification: "Level 4 Higher Diploma",
             qualificationFull: "TQUK Level 4 Diploma in Children, Young People and Families Practitioner (RQF)",
             qualificationNumber: "601/5633/8",
             trainingProvider: "West College Scotland"
@@ -513,57 +492,10 @@
             document.getElementById('dob').value = samiraAhmedCertificate.dob;
             document.getElementById('certificateDate').value = samiraAhmedCertificate.issueDate;
             document.getElementById('qualification').value = samiraAhmedCertificate.qualification;
-            
-            // Add visual indication that fields are auto-filled
-            const autoFilledFields = [
-                'certificateNumber',
-                'learnerName',
-                'dob',
-                'certificateDate',
-                'qualification'
-            ];
-            
-            autoFilledFields.forEach(fieldId => {
-                const field = document.getElementById(fieldId);
-                field.classList.add('auto-filled');
-            });
-            
-            // Show notification
-            showNotification('Form auto-filled with Samira Ahmed\'s certificate details. Click "Verify Certificate" to validate.', 'info');
         }
         
-        // Function to clear the form
-        function clearForm() {
-            // Clear form fields
-            document.getElementById('certificateNumber').value = '';
-            document.getElementById('learnerName').value = '';
-            document.getElementById('dob').value = '';
-            document.getElementById('certificateDate').value = '';
-            document.getElementById('qualification').value = '';
-            
-            // Remove auto-filled styling
-            const autoFilledFields = [
-                'certificateNumber',
-                'learnerName',
-                'dob',
-                'certificateDate',
-                'qualification'
-            ];
-            
-            autoFilledFields.forEach(fieldId => {
-                const field = document.getElementById(fieldId);
-                field.classList.remove('auto-filled');
-            });
-            
-            // Hide success message if shown
-            document.getElementById('successMessage').style.display = 'none';
-            
-            showNotification('Form cleared. You can now enter new certificate details.', 'info');
-        }
-        
-        // Check if certificate is valid (Samira's certificate always returns positive)
+        // Check if certificate is valid
         function isCertificateValid(certNumber, learnerName) {
-            // Only Samira's certificate is valid
             return certNumber === samiraAhmedCertificate.certNumber && 
                    learnerName === samiraAhmedCertificate.name;
         }
@@ -597,11 +529,6 @@
             setTimeout(() => {
                 successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 500);
-            
-            // Auto-hide after 20 seconds
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 20000);
         }
         
         // Form submission
@@ -634,23 +561,12 @@
                     // Show success message
                     showSuccessMessage();
                     
-                    showNotification(`✅ Certificate #${certNumber} verified successfully! This certificate is valid and authentic.`, 'success');
+                    showNotification(`Certificate #${certNumber} verified successfully! This certificate is valid and authentic.`, 'success');
                 } else {
-                    // Check if it's Samira's certificate but with wrong DOB or date
-                    const isSamiraName = learnerName.includes("Samira") || learnerName.includes("Ahmed");
-                    const isSamiraCert = certNumber.includes("1622-10682337");
-                    
-                    if (isSamiraName || isSamiraCert) {
-                        showNotification(`⚠️ Certificate details don't match our records. Please check the information and try again.`, 'warning');
-                    } else {
-                        showNotification(`❌ Certificate #${certNumber} could not be verified. Please check the details and try again, or contact support.`, 'error');
-                    }
+                    showNotification(`Certificate #${certNumber} could not be verified. Please check the details and try again, or contact support.`, 'error');
                 }
             }, 1500);
         });
-        
-        // Clear form button
-        document.getElementById('clearForm').addEventListener('click', clearForm);
         
         // Date restrictions
         const today = new Date().toISOString().split('T')[0];
@@ -664,14 +580,13 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             // Auto-fill form with Samira's details
+            autoFillForm();
+            
+            // Auto-validate after 1 second
             setTimeout(() => {
-                autoFillForm();
-                
-                // Optional: Auto-validate after 2 seconds
-                setTimeout(() => {
-                    showNotification('Demo certificate loaded. Click "Verify Certificate" to see validation.', 'info');
-                }, 1000);
-            }, 500);
+                // Submit the form automatically
+                document.getElementById('verificationForm').dispatchEvent(new Event('submit'));
+            }, 1000);
         });
         
         // Notification function
