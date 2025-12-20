@@ -37,6 +37,8 @@ const surnameInput = document.getElementById('surname');
 const certInput = document.getElementById('cert');
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileNav = document.getElementById('mobileNav');
+const searchIcon = document.getElementById('searchIcon');
+const mobileSearchBox = document.getElementById('mobileSearchBox');
 
 // Initialize page
 document.addEventListener('DOMContentLoaded', function() {
@@ -53,12 +55,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Setup mobile menu
     setupMobileMenu();
+    
+    // Setup search functionality
+    setupSearch();
 });
 
 // Setup mobile menu
 function setupMobileMenu() {
     mobileMenuBtn.addEventListener('click', function() {
         mobileNav.classList.toggle('active');
+        
+        // Close search box if open
+        mobileSearchBox.classList.remove('active');
         
         // Change icon
         const icon = this.querySelector('i');
@@ -73,10 +81,43 @@ function setupMobileMenu() {
     
     // Close mobile menu when clicking outside
     document.addEventListener('click', function(event) {
-        if (!mobileMenuBtn.contains(event.target) && !mobileNav.contains(event.target) && mobileNav.classList.contains('active')) {
+        if (!mobileMenuBtn.contains(event.target) && 
+            !mobileNav.contains(event.target) && 
+            mobileNav.classList.contains('active')) {
             mobileNav.classList.remove('active');
             mobileMenuBtn.querySelector('i').classList.remove('fa-times');
             mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+        }
+    });
+}
+
+// Setup search functionality
+function setupSearch() {
+    // Mobile search icon click
+    searchIcon.addEventListener('click', function() {
+        mobileSearchBox.classList.toggle('active');
+        
+        // Close mobile menu if open
+        if (mobileNav.classList.contains('active')) {
+            mobileNav.classList.remove('active');
+            mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+            mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+        }
+        
+        // Focus on search input when opened
+        if (mobileSearchBox.classList.contains('active')) {
+            setTimeout(() => {
+                mobileSearchBox.querySelector('input').focus();
+            }, 100);
+        }
+    });
+    
+    // Close search box when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+        if (!searchIcon.contains(event.target) && 
+            !mobileSearchBox.contains(event.target) && 
+            mobileSearchBox.classList.contains('active')) {
+            mobileSearchBox.classList.remove('active');
         }
     });
 }
@@ -253,5 +294,10 @@ window.addEventListener('resize', function() {
         mobileNav.classList.remove('active');
         mobileMenuBtn.querySelector('i').classList.remove('fa-times');
         mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+    }
+    
+    // Hide mobile search box on desktop
+    if (window.innerWidth > 768 && mobileSearchBox.classList.contains('active')) {
+        mobileSearchBox.classList.remove('active');
     }
 });
