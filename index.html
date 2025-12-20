@@ -1,88 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certificate Verification — Training Qualifications UK</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Verification — Training Qualifications UK</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Fixed Header -->
+    <header class="fixed-header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="logo.png" alt="Training Qualifications UK">
+            </div>
+            <nav class="header-nav">
+                <a href="#" class="contact-btn">Contact us <i class="fas fa-chevron-right"></i></a>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <button class="verify-header-btn" onclick="scrollToForm()">Verify Certificate</button>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-<div class="header">
-  <img src="logo.png" alt="TQUK Logo" class="logo">
-</div>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1>Training QualificationsUK</h1>
+            <h2>Certificate Verification</h2>
+            <p>Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.</p>
+            <p>Fill your details into the form on the right or scan the QR code in the bottom left of your certificate to verify it in seconds.</p>
+            <p class="note">Only certificates issued from 2018 onwards can be checked below. If your certificate is dated before 2018, please contact our Customer Service Specialists.</p>
+        </section>
 
-<div class="main-container">
+        <!-- Form and Results Section -->
+        <section class="form-section" id="verifyForm">
+            <div class="container">
+                <div class="form-wrapper">
+                    <h3>Verify Your Certificate</h3>
+                    <form id="verificationForm">
+                        <div class="form-group">
+                            <label for="forename">Forename</label>
+                            <input type="text" id="forename" name="forename" value="Grace" class="editable-field">
+                        </div>
 
-  <h1>Certificate Verification</h1>
+                        <div class="form-group">
+                            <label for="surname">Surname</label>
+                            <input type="text" id="surname" name="surname" value="Okafor" class="editable-field">
+                        </div>
 
-  <p>
-    Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.
-  </p>
+                        <div class="form-group">
+                            <label for="cert">Certification Number</label>
+                            <input type="text" id="cert" name="cert" value="513-10458661-398825-20230515" class="editable-field">
+                        </div>
 
-  <p>
-    Fill your details <b>into the form below or scan the QR code</b> in the bottom left of your certificate to verify it in seconds.
-  </p>
+                        <button type="submit" class="verify-btn">Verify</button>
+                    </form>
 
-  <form id="verifyForm">
+                    <!-- Results Area - Shows by default -->
+                    <div class="results-area">
+                        <!-- Default/Valid Result (shown when data matches valid certificates) -->
+                        <div class="result-container valid-result" id="validResult">
+                            <div class="result-header">
+                                <div class="result-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h4>Certificate Verified</h4>
+                            </div>
+                            <div class="result-details">
+                                <p><strong>Forename:</strong> <span id="resultForename">Grace</span></p>
+                                <p><strong>Surname:</strong> <span id="resultSurname">Okafor</span></p>
+                                <p><strong>Certification Number:</strong> <span id="resultCertNum">513-10458661-398825-20230515</span></p>
+                            </div>
+                            <p class="valid-message">
+                                <i class="fas fa-search"></i> TQUK can confirm that the certificate information provided matches a valid TQUK certificate.
+                            </p>
+                        </div>
 
-    <label>Forename</label>
-    <input id="forename" type="text" required>
+                        <!-- Error Result (hidden by default) -->
+                        <div class="result-container error-result" id="errorResult" style="display: none;">
+                            <div class="result-header">
+                                <div class="result-icon error">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <h4>Verification Failed</h4>
+                            </div>
+                            <div class="result-details">
+                                <p><strong>Forename:</strong> <span id="errorForename"></span></p>
+                                <p><strong>Surname:</strong> <span id="errorSurname"></span></p>
+                                <p><strong>Certification Number:</strong> <span id="errorCertNum"></span></p>
+                            </div>
+                            <div class="error-message">
+                                <div class="error-separator"></div>
+                                <p class="error-text">
+                                    <strong>1.</strong> Those details do not match any certificate on our system. Please double check the certification number and try again.
+                                </p>
+                                <div class="error-separator"></div>
+                            </div>
+                            <div class="contact-info">
+                                <p><i class="fas fa-phone"></i> Call us on 03333 583 344</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <label>Surname</label>
-    <input id="surname" type="text" required>
+        <!-- Additional Info -->
+        <section class="info-section">
+            <div class="container">
+                <h3>Need Help?</h3>
+                <p>If you're having trouble verifying a certificate, please ensure you've entered the details exactly as they appear on the certificate. Certificate numbers are case-sensitive and must include all dashes.</p>
+                <p>For certificates issued before 2018, or for any other verification issues, please contact our support team.</p>
+            </div>
+        </section>
+    </main>
 
-    <label>Certificate Number</label>
-    <input id="cert" type="text" required>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Cookie Policy</a>
+                <a href="#">GDPR & Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Careers</a>
+            </div>
+            <div class="footer-info">
+                <p>Company number: 07827508 | Registered address: Crossgate House, Cross Street, Sale, Manch M33 7FT | © 2025 TQUK. All Rights Reserved</p>
+            </div>
+            <div class="footer-image">
+                <img src="tooter.png" alt="TQUK Footer">
+            </div>
+        </div>
+    </footer>
 
-    <button type="submit">Verify Certificate</button>
-
-  </form>
-
-  <div id="result"></div>
-
-</div>
-
-<script>
-document.getElementById('verifyForm').addEventListener('submit', function(e) {
-
-  e.preventDefault();
-
-  const first = document.getElementById("forename").value.trim().toLowerCase();
-  const last  = document.getElementById("surname").value.trim().toLowerCase();
-  const cert  = document.getElementById("cert").value.trim();
-
-  const correctFirst = "samira ahmed alim";
-  const correctLast  = "mohamoud";
-  const correctCert  = "1622-10682337-592729-20250110";
-
-  if(first === correctFirst && last === correctLast && cert === correctCert)
-  {
-    document.getElementById('result').innerHTML = `
-      <p class="verified">
-     ✅TQUK can confirm that the certificate information provided matches a valid TQUK certificate. <br><br>
-      Name: <strong>Samira Ahmed Alim Mohamoud</strong><br>
-      Certificate Number: <strong>${cert}</strong>
-      </p>`;
-  }
-  else
-  {
-    document.getElementById('result').innerHTML = `
-      <p class="error">
-       Those details do not match any certificate on our system. Please double check
-      </p>`;
-  }
-
-});
-</script>
-
-<footer>
-
-<img src="foot.png" width="30">
-    Company number: 07847608  |
-    Registered address: Crossgate House, Cross Street, Sale, Manchester, M33 7FT  |
-    © 2025 TQUK. All Rights Reserved.
-</footer>
-
+    <script src="script.js"></script>
 </body>
 </html>
