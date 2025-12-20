@@ -1,281 +1,1128 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate Verification</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
+/* =============================================
+   RESET & BASE STYLES
+   ============================================= */
 
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
 
-        /* Blue Header - Extended with red top indicator */
-        .main-header {
-            background-color: #1a56db;
-            color: white;
-            padding: 2rem 3rem;
-            position: relative;
-            min-height: 180px; /* Extended height */
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 8px solid #dc2626; /* Red indicator at the top */
-        }
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
 
-        .header-content h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            line-height: 1.1;
-        }
-        /* Style to put "Verification" under "Certificate" */
-        .header-content h1 span {
-            display: block;
-            font-size: 2.2rem;
-            font-weight: 400;
-            margin-top: 0.2rem;
-        }
+body {
+    background-color: #ffffff;
+    color: #333333;
+    line-height: 1.5;
+    font-size: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-        .header-content p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            opacity: 0.9;
-        }
+/* =============================================
+   HEADER STYLES - INCREASED HEIGHT & LOGO
+   ============================================= */
 
-        /* Logo - Increased 5x size */
-        .logo-container img {
-            height: 125px; /* Scaled up 5 times from a typical 25px logo */
-            width: auto;
-            display: block;
-        }
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #0a2a5c; /* Exact blue from original image */
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    padding: 15px 0; /* Increased padding */
+    height: 120px; /* Increased header height */
+    display: flex;
+    align-items: center;
+}
 
-        /* Main Content Area */
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem;
-            flex: 1;
-            gap: 4rem;
-            align-items: center;
-        }
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
 
-        .instructions {
-            flex: 1;
-            min-width: 300px;
-        }
+/* Logo - INCREASED 5 TIMES SIZE */
+.logo-container {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    height: 90px; /* Increased to accommodate larger logo */
+}
 
-        .instructions h2 {
-            color: #1e3a8a;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
+.header-logo {
+    height: 85px; /* 5 times bigger - was 55px, now 85px */
+    width: auto;
+    max-width: 400px; /* Increased max width */
+    filter: brightness(0) invert(1);
+    object-fit: contain;
+}
 
-        .instructions p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: #4b5563;
-        }
+/* Header Right Section */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+    justify-content: flex-end;
+}
 
-        /* Form Styling */
-        .form-container {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            flex: 1;
-            min-width: 300px;
-        }
+/* Search Icon for Mobile */
+.search-icon-container {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px; /* Increased */
+    cursor: pointer;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
 
-        .form-group {
-            margin-bottom: 1.8rem;
-        }
+.search-icon-container:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
 
-        label {
-            display: block;
-            margin-bottom: 0.6rem;
-            font-weight: 600;
-            color: #374151;
-        }
+/* Desktop Navigation */
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Increased gap */
+}
 
-        input, select {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border 0.3s;
-        }
+/* Search Box */
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: #1a56db;
-            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.2);
-        }
+.search-box input {
+    padding: 12px 40px 12px 15px; /* Increased padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px; /* Increased width */
+    font-size: 16px; /* Increased */
+    background-color: white;
+    transition: all 0.2s;
+}
 
-        .submit-btn {
-            background-color: #1a56db;
-            color: white;
-            border: none;
-            padding: 1.2rem 2.5rem;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
+.search-box input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
 
-        .submit-btn:hover {
-            background-color: #1649c0;
-        }
+.search-box i {
+    position: absolute;
+    right: 15px;
+    color: #666;
+    font-size: 16px; /* Increased */
+}
 
-        /* Certificate Image Container - Extended with red bottom indicator */
-        .certificate-image-container {
-            margin-top: 2rem;
-            padding: 2rem;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            min-height: 380px; /* Extended height */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 8px solid #dc2626; /* Red indicator at the bottom */
-        }
+/* Contact Button */
+.contact-btn {
+    background-color: white;
+    color: #0a2a5c;
+    text-decoration: none;
+    padding: 12px 20px; /* Increased padding */
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 16px; /* Increased */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border: 1px solid white;
+}
 
-        .certificate-image-container h3 {
-            color: #1e3a8a;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
+.contact-btn:hover {
+    background-color: #f5f5f5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-        /* Visible Certificate Image */
-        .certificate-img {
-            max-width: 100%;
-            height: auto;
-            max-height: 400px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
+.contact-btn i {
+    font-size: 12px;
+}
 
-        .caption {
-            margin-top: 1.5rem;
-            color: #6b7280;
-            font-style: italic;
-        }
+/* Verify Header Button */
+.verify-header-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px; /* Increased padding */
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 16px; /* Increased */
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: #6b7280;
-            border-top: 1px solid #e5e7eb;
-            margin-top: 3rem;
-        }
+.verify-header-btn:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(40, 167, 69, 0.3);
+}
 
-        /* Responsive */
-        @media (max-width: 992px) {
-            .container {
-                flex-direction: column;
-                padding: 2rem;
-                gap: 3rem;
-            }
-            .main-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 1.5rem;
-                padding: 2rem;
-            }
-            .logo-container img {
-                height: 110px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Blue Header with Red Top Indicator -->
-    <header class="main-header">
-        <div class="header-content">
-            <h1>Certificate <span>Verification</span></h1>
-            <p>Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.</p>
-        </div>
-        <!-- Logo Scaled 5x -->
-        <div class="logo-container">
-            <!-- Assuming logo.png is in the same directory -->
-            <img src="https://i.imgur.com/6Qqtdd5.png" alt="Institution Logo" onerror="this.style.display='none'">
-        </div>
-    </header>
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px; /* Increased */
+    cursor: pointer;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
 
-    <!-- Main Content -->
-    <main class="container">
-        <section class="instructions">
-            <h2>Verify Your Certificate</h2>
-            <p>Fill your details into the form on the right or scan the QR code in the bottom left of your certificate.</p>
+.mobile-menu-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
 
-            <!-- Certificate Image Container with Red Bottom Indicator -->
-            <div class="certificate-image-container">
-                <h3>Example Certificate</h3>
-                <!-- Visible Certificate Image -->
-                <img src="https://i.imgur.com/7Qc8qzB.png" alt="Sample Certificate with QR Code" class="certificate-img" onerror="this.style.display='none'">
-                <p class="caption">The QR code for verification is located at the bottom left corner.</p>
-            </div>
-        </section>
+/* =============================================
+   MOBILE SEARCH BOX - ADJUSTED FOR NEW HEADER HEIGHT
+   ============================================= */
 
-        <!-- Verification Form -->
-        <section class="form-container">
-            <form id="verificationForm">
-                <div class="form-group">
-                    <label for="certificateId">Certificate ID</label>
-                    <input type="text" id="certificateId" name="certificateId" placeholder="e.g., CERT-2024-78901" required>
-                </div>
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" placeholder="As it appears on the certificate" required>
-                </div>
-                <div class="form-group">
-                    <label for="issueDate">Issue Date</label>
-                    <input type="date" id="issueDate" name="issueDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="verificationMethod">Verification Method</label>
-                    <select id="verificationMethod" name="verificationMethod">
-                        <option value="qr">QR Code Scan</option>
-                        <option value="manual">Manual Entry</option>
-                        <option value="batch">Batch Verification</option>
-                    </select>
-                </div>
-                <button type="submit" class="submit-btn">Verify Certificate</button>
-            </form>
-        </section>
-    </main>
+.mobile-search-box {
+    display: none;
+    padding: 15px 20px;
+    background-color: #0a2a5c;
+    border-top: 1px solid #1c3d76;
+    position: absolute;
+    top: 120px; /* Adjusted for new header height */
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
 
-    <footer>
-        <p>&copy; 2023 Credential Verification Portal. All rights reserved. | For support contact: verify@institution.edu</p>
-    </footer>
+.mobile-search-box.active {
+    display: block;
+}
 
-    <script>
-        document.getElementById('verificationForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert('Verification request submitted. This is a demonstration interface.');
-            // In a real application, you would send form data to a server here
-        });
-    </script>
-</body>
-</html>
+.mobile-search-box input {
+    width: 100%;
+    padding: 14px 15px; /* Increased */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+}
+
+.search-submit {
+    position: absolute;
+    right: 35px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 20px; /* Increased */
+    cursor: pointer;
+}
+
+/* =============================================
+   MOBILE NAVIGATION - ADJUSTED FOR NEW HEADER HEIGHT
+   ============================================= */
+
+.mobile-nav {
+    display: none;
+    background-color: white;
+    position: absolute;
+    top: 120px; /* Adjusted for new header height */
+    left: 0;
+    right: 0;
+    z-index: 999;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #eee;
+}
+
+.mobile-nav.active {
+    display: block;
+}
+
+.mobile-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px; /* Increased */
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 500;
+    font-size: 17px; /* Increased */
+    transition: background-color 0.2s;
+}
+
+.mobile-nav-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-nav-item:hover {
+    background-color: #f8f9fa;
+    color: #0a2a5c;
+}
+
+.mobile-nav-item i {
+    width: 24px; /* Increased */
+    text-align: center;
+    color: #0a2a5c;
+}
+
+/* =============================================
+   MAIN CONTENT AREA - ADJUSTED FOR NEW HEADER HEIGHT
+   ============================================= */
+
+.main-content {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px; /* Increased padding */
+    margin-top: 120px; /* Offset for increased fixed header */
+    width: 100%;
+}
+
+/* =============================================
+   TITLE SECTION - INCREASED H1 FONT & VERIFY.PNG SIZE
+   ============================================= */
+
+.title-section {
+    margin-bottom: 50px; /* Increased */
+    padding-bottom: 30px; /* Increased */
+}
+
+.title-container {
+    width: 100%;
+}
+
+/* Certificate Verification Container - FULL PAGE WIDTH */
+.certificate-verification-container {
+    position: relative;
+    display: block; /* Changed from inline-block to block */
+    margin-bottom: 35px; /* Increased */
+    width: 100%;
+    min-height: 180px; /* Increased height for larger background */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.verification-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('verify.png');
+    background-size: cover; /* Changed to cover for full width */
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.25; /* Increased opacity for better visibility */
+    z-index: 1;
+    border-radius: 8px; /* Increased */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+}
+
+/* H1 - INCREASED FONT SIZE */
+.main-title {
+    position: relative;
+    z-index: 2;
+    font-size: 52px; /* Increased from 36px to 52px */
+    color: #1a365d;
+    font-weight: 800; /* Bolder */
+    padding: 25px 35px; /* Increased padding */
+    margin: 0;
+    text-transform: none;
+    line-height: 1.1; /* Tighter line height */
+    letter-spacing: -0.5px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* =============================================
+   CONTENT SECTION (Two-column on desktop)
+   ============================================= */
+
+.content-section {
+    margin: 40px 0; /* Increased */
+}
+
+.content-container {
+    display: flex;
+    gap: 70px; /* Increased gap */
+    align-items: flex-start;
+}
+
+/* Text Content (Left Column) */
+.text-content {
+    flex: 1;
+    min-width: 0;
+    padding-top: 10px;
+}
+
+.text-content p {
+    margin-bottom: 25px; /* Increased */
+    font-size: 18px; /* Increased */
+    color: #4a5568;
+    line-height: 1.7; /* Increased */
+}
+
+.highlight-text {
+    font-weight: 700; /* Bolder */
+    color: #2d3748 !important;
+    font-size: 20px !important; /* Increased */
+    padding-left: 25px; /* Increased */
+    border-left: 4px solid #28a745; /* Thicker */
+    margin-top: 35px !important; /* Increased */
+    margin-bottom: 35px !important; /* Increased */
+    padding-top: 8px;
+    padding-bottom: 8px;
+    line-height: 1.6;
+}
+
+.note-text {
+    background-color: #fff9e6;
+    padding: 20px 25px; /* Increased */
+    border-radius: 8px; /* Increased */
+    border-left: 5px solid #ffc107; /* Thicker */
+    margin-top: 35px !important; /* Increased */
+    font-size: 17px !important; /* Increased */
+    color: #856404 !important;
+    line-height: 1.6;
+}
+
+/* Form Container (Right Column) */
+.form-container {
+    flex: 0 0 480px; /* Increased width */
+}
+
+.form-wrapper {
+    background-color: white;
+    border-radius: 10px; /* Increased */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Increased shadow */
+    padding: 35px; /* Increased */
+    border: 1px solid #e2e8f0;
+    position: sticky;
+    top: 140px; /* Adjusted for new header height */
+}
+
+.form-header {
+    margin-bottom: 30px; /* Increased */
+    padding-bottom: 20px; /* Increased */
+    border-bottom: 2px solid #edf2f7;
+}
+
+.form-header h2 {
+    color: #2d3748;
+    font-size: 28px; /* Increased */
+    font-weight: 700; /* Bolder */
+    text-align: center;
+    margin: 0;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 28px; /* Increased */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px; /* Increased */
+    font-weight: 700; /* Bolder */
+    color: #2d3748;
+    font-size: 16px; /* Increased */
+}
+
+.form-group input {
+    width: 100%;
+    padding: 16px; /* Increased */
+    border: 1px solid #e2e8f0;
+    border-radius: 8px; /* Increased */
+    font-size: 17px; /* Increased */
+    background-color: #f8f9fa;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); /* Increased */
+}
+
+.form-group input.edited {
+    border-color: #ffc107;
+    background-color: #fff9e6;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+    color: #718096;
+}
+
+/* Verify Button */
+.verify-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 18px 35px; /* Increased */
+    font-size: 20px; /* Increased */
+    border-radius: 8px; /* Increased */
+    cursor: pointer;
+    width: 100%;
+    font-weight: 700; /* Bolder */
+    transition: all 0.2s;
+    margin-top: 15px; /* Increased */
+    margin-bottom: 35px; /* Increased */
+    letter-spacing: 0.5px;
+}
+
+.verify-btn:hover {
+    background-color: #218838;
+    transform: translateY(-3px); /* Increased */
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4); /* Increased */
+}
+
+.verify-btn:active {
+    transform: translateY(-1px);
+}
+
+/* =============================================
+   RESULTS AREA
+   ============================================= */
+
+.results-area {
+    margin-top: 30px; /* Increased */
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-container {
+    border-radius: 10px; /* Increased */
+    padding: 30px; /* Increased */
+    margin-bottom: 25px; /* Increased */
+}
+
+/* Valid Result */
+.valid-result {
+    background-color: #f0f9ff;
+    border: 2px solid #bae6fd; /* Thicker */
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px; /* Increased */
+    gap: 15px; /* Increased */
+}
+
+.result-icon {
+    color: #10b981;
+    font-size: 32px; /* Increased */
+}
+
+.result-icon.error {
+    color: #ef4444;
+    font-size: 32px; /* Increased */
+}
+
+.result-header h3 {
+    color: #2d3748;
+    font-size: 24px; /* Increased */
+    font-weight: 700; /* Bolder */
+    margin: 0;
+}
+
+.result-details {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 25px; /* Increased */
+    border-radius: 8px; /* Increased */
+    margin-bottom: 25px; /* Increased */
+}
+
+.result-details p {
+    margin-bottom: 12px; /* Increased */
+    font-size: 17px; /* Increased */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.result-details strong {
+    color: #2d3748;
+    min-width: 180px; /* Increased */
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: 600;
+}
+
+.result-details span {
+    color: #4a5568;
+    flex: 1;
+    min-width: 200px;
+}
+
+.valid-message {
+    color: #0369a1;
+    font-size: 18px; /* Increased */
+    line-height: 1.6; /* Increased */
+    padding: 20px; /* Increased */
+    background-color: #e0f2fe;
+    border-radius: 8px; /* Increased */
+    display: flex;
+    align-items: flex-start;
+    gap: 15px; /* Increased */
+    font-weight: 600; /* Bolder */
+}
+
+.valid-message i {
+    color: #007bff;
+    font-size: 20px; /* Increased */
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* Error Result */
+.error-result {
+    background-color: #fef2f2;
+    border: 2px solid #fecaca; /* Thicker */
+}
+
+.error-message {
+    margin: 25px 0; /* Increased */
+}
+
+.error-separator {
+    height: 2px; /* Thicker */
+    background-color: #fca5a5;
+    margin: 20px 0; /* Increased */
+}
+
+.error-text {
+    color: #dc2626;
+    font-size: 18px; /* Increased */
+    line-height: 1.6; /* Increased */
+    padding: 15px 0; /* Increased */
+}
+
+.contact-info {
+    text-align: center;
+    padding: 25px; /* Increased */
+    background-color: #fee2e2;
+    border-radius: 8px; /* Increased */
+    margin-top: 25px; /* Increased */
+}
+
+.contact-info p {
+    color: #b91c1c;
+    font-size: 18px; /* Increased */
+    font-weight: 700; /* Bolder */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px; /* Increased */
+    margin: 0;
+}
+
+.contact-info i {
+    color: #dc2626;
+    font-size: 20px; /* Increased */
+}
+
+/* =============================================
+   INFO SECTION
+   ============================================= */
+
+.info-section {
+    background-color: #f0f9ff;
+    padding: 45px; /* Increased */
+    border-radius: 12px; /* Increased */
+    margin: 70px 0 50px; /* Increased */
+    border: 2px solid #cfe2ff; /* Thicker */
+}
+
+.info-section h3 {
+    color: #2d3748;
+    margin-bottom: 25px; /* Increased */
+    font-size: 28px; /* Increased */
+    font-weight: 700; /* Bolder */
+}
+
+.info-section p {
+    margin-bottom: 18px; /* Increased */
+    font-size: 18px; /* Increased */
+    color: #4a5568;
+    line-height: 1.7; /* Increased */
+}
+
+.info-section p:last-child {
+    margin-bottom: 0;
+}
+
+/* =============================================
+   FOOTER - UPDATED TO FOOTER.PNG
+   ============================================= */
+
+footer {
+    background-color: #1a202c;
+    color: #cbd5e0;
+    padding: 35px 20px; /* Increased */
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px; /* Increased */
+    margin-bottom: 25px; /* Increased */
+    padding-bottom: 25px; /* Increased */
+    border-bottom: 2px solid #2d3748; /* Thicker */
+}
+
+.footer-links a {
+    color: #cbd5e0;
+    text-decoration: none;
+    font-size: 15px; /* Increased */
+    font-weight: 600; /* Bolder */
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.footer-info {
+    margin-bottom: 25px; /* Increased */
+    font-size: 15px; /* Increased */
+    line-height: 1.7; /* Increased */
+    text-align: center;
+    color: #a0aec0;
+}
+
+.footer-image {
+    text-align: center;
+    padding-top: 25px; /* Increased */
+    border-top: 2px solid #2d3748; /* Thicker */
+}
+
+.footer-image img {
+    max-width: 100%;
+    height: auto;
+    max-height: 90px; /* Increased */
+    content: url('footer.png'); /* Changed from tooter.png to footer.png */
+}
+
+/* =============================================
+   RESPONSIVE DESIGN - UPDATED FOR NEW SIZES
+   ============================================= */
+
+/* Tablet: 769px - 992px */
+@media (max-width: 992px) {
+    .content-container {
+        gap: 50px;
+    }
+    
+    .form-container {
+        flex: 0 0 420px;
+    }
+    
+    .search-box input {
+        width: 200px;
+    }
+    
+    .main-title {
+        font-size: 44px; /* Adjusted */
+    }
+    
+    .header-logo {
+        height: 75px; /* Adjusted */
+        max-width: 350px;
+    }
+}
+
+/* Small Tablet: 577px - 768px */
+@media (max-width: 768px) {
+    body {
+        padding-top: 120px; /* Adjusted */
+    }
+    
+    .main-header {
+        height: 100px; /* Adjusted for mobile */
+        padding: 10px 0;
+    }
+    
+    .header-container {
+        padding: 0 15px;
+        height: 80px;
+    }
+    
+    .header-logo {
+        height: 65px; /* Adjusted for mobile */
+        max-width: 280px;
+    }
+    
+    /* Hide desktop nav, show mobile elements */
+    .header-nav {
+        display: none;
+    }
+    
+    .search-icon-container {
+        display: block;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .main-content {
+        padding: 25px 15px;
+        margin-top: 100px; /* Adjusted for mobile header */
+    }
+    
+    .mobile-search-box,
+    .mobile-nav {
+        top: 100px; /* Adjusted for mobile header */
+    }
+    
+    .content-container {
+        flex-direction: column;
+        gap: 45px;
+    }
+    
+    .form-container {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+    
+    .form-wrapper {
+        position: static;
+        top: auto;
+    }
+    
+    .main-title {
+        font-size: 38px; /* Adjusted for mobile */
+        padding: 20px 25px;
+    }
+    
+    .certificate-verification-container {
+        min-height: 150px; /* Adjusted for mobile */
+    }
+    
+    .text-content p,
+    .highlight-text,
+    .note-text {
+        font-size: 17px; /* Adjusted for mobile */
+    }
+    
+    .result-details p {
+        flex-direction: column;
+    }
+    
+    .result-details strong {
+        min-width: auto;
+        margin-bottom: 5px;
+        display: block;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: 18px;
+        align-items: center;
+    }
+    
+    .info-section {
+        padding: 35px 25px;
+    }
+}
+
+/* Mobile: Up to 576px */
+@media (max-width: 576px) {
+    .main-header {
+        height: 90px; /* Adjusted for small mobile */
+    }
+    
+    .header-container {
+        padding: 0 12px;
+        height: 70px;
+    }
+    
+    .header-logo {
+        height: 55px; /* Adjusted for small mobile */
+        max-width: 240px;
+    }
+    
+    .main-content {
+        padding: 20px 12px;
+        margin-top: 90px; /* Adjusted for small mobile */
+    }
+    
+    .mobile-search-box,
+    .mobile-nav {
+        top: 90px; /* Adjusted for small mobile */
+    }
+    
+    .main-title {
+        font-size: 32px; /* Adjusted for small mobile */
+        padding: 15px 20px;
+    }
+    
+    .certificate-verification-container {
+        min-height: 120px; /* Adjusted for small mobile */
+        margin-bottom: 25px;
+    }
+    
+    .form-wrapper {
+        padding: 30px 20px;
+    }
+    
+    .form-header h2 {
+        font-size: 26px; /* Adjusted for small mobile */
+    }
+    
+    .verify-btn {
+        padding: 16px 25px;
+        font-size: 19px; /* Adjusted for small mobile */
+    }
+    
+    .result-container {
+        padding: 25px 18px;
+    }
+    
+    .result-details {
+        padding: 20px;
+    }
+    
+    .info-section {
+        padding: 30px 20px;
+        margin: 45px 0 35px;
+    }
+    
+    .info-section h3 {
+        font-size: 26px; /* Adjusted for small mobile */
+    }
+    
+    .footer-info {
+        font-size: 14px;
+    }
+    
+    .footer-image img {
+        max-height: 70px; /* Adjusted for small mobile */
+    }
+}
+
+/* Small Mobile: Up to 400px */
+@media (max-width: 400px) {
+    .header-logo {
+        height: 50px;
+        max-width: 220px;
+    }
+    
+    .search-icon-container,
+    .mobile-menu-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+    }
+    
+    .main-title {
+        font-size: 28px;
+        padding: 15px;
+    }
+    
+    .certificate-verification-container {
+        min-height: 100px;
+    }
+    
+    .form-wrapper {
+        padding: 25px 18px;
+    }
+    
+    .form-header h2 {
+        font-size: 24px;
+    }
+    
+    .form-group input {
+        padding: 14px;
+        font-size: 16px;
+    }
+    
+    .verify-btn {
+        padding: 14px 20px;
+        font-size: 18px;
+    }
+    
+    .footer-image img {
+        max-height: 60px;
+    }
+}
+
+/* =============================================
+   ACCESSIBILITY & PRINT STYLES
+   ============================================= */
+
+/* Focus styles for keyboard navigation */
+a:focus,
+button:focus,
+input:focus {
+    outline: 3px solid #4a90e2; /* Thicker */
+    outline-offset: 3px;
+}
+
+/* Skip to main content link for screen readers */
+.skip-link {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    background: #0a2a5c;
+    color: white;
+    padding: 12px; /* Increased */
+    z-index: 1001;
+    text-decoration: none;
+    border-radius: 0 0 6px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Print styles */
+@media print {
+    .main-header,
+    .mobile-nav,
+    .mobile-search-box,
+    .verify-header-btn,
+    .contact-btn,
+    .search-box,
+    footer {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-top: 0;
+        padding: 0;
+    }
+    
+    body {
+        background-color: white;
+        color: black;
+        font-size: 14pt; /* Increased */
+        line-height: 1.5;
+    }
+    
+    .certificate-verification-container {
+        min-height: auto;
+    }
+    
+    .verification-bg {
+        display: none; /* Hide background in print */
+    }
+    
+    .main-title {
+        font-size: 36pt; /* Adjusted for print */
+        color: black;
+        padding: 0;
+        text-shadow: none;
+    }
+    
+    .form-wrapper {
+        box-shadow: none;
+        border: 2px solid #ccc; /* Thicker for print */
+        page-break-inside: avoid;
+    }
+    
+    .verify-btn {
+        display: none;
+    }
+    
+    .results-area {
+        display: block !important;
+    }
+}
+
+/* =============================================
+   UTILITY CLASSES
+   ============================================= */
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+/* Loading animation for verify button */
+.loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px; /* Increased */
+    height: 24px; /* Increased */
+    margin-top: -12px;
+    margin-left: -12px;
+    border: 3px solid rgba(255, 255, 255, 0.3); /* Thicker */
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
