@@ -62,7 +62,7 @@ body {
 }
 
 .header-logo {
-    height: 85px; /* 5 times bigger - was 55px, now 85px */
+    height: 150px; /* 5 times bigger - was 55px, now 85px */
     width: auto;
     max-width: 400px; /* Increased max width */
     filter: brightness(0) invert(1);
