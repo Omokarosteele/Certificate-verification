@@ -1,4 +1,4 @@
-// List of valid certificates (for demonstration)
+// List of valid certificates
 const validCertificates = [
     {
         forename: "Grace",
@@ -29,33 +29,61 @@ const validCertificates = [
 
 // DOM elements
 const form = document.getElementById('verificationForm');
+const verifyButton = document.getElementById('verifyButton');
+const resultsArea = document.getElementById('resultsArea');
 const validResult = document.getElementById('validResult');
 const errorResult = document.getElementById('errorResult');
 const forenameInput = document.getElementById('forename');
 const surnameInput = document.getElementById('surname');
 const certInput = document.getElementById('cert');
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileNav = document.getElementById('mobileNav');
 
-// Initialize page with default verification
+// Initialize page
 document.addEventListener('DOMContentLoaded', function() {
     // Set initial values
     forenameInput.value = "Grace";
     surnameInput.value = "Okafor";
     certInput.value = "513-10458661-398825-20230515";
     
-    // Show valid result for default data
-    showValidResult();
+    // Initially hide results area (no onload verification)
+    resultsArea.style.display = 'none';
     
-    // Update result details
-    updateResultDetails();
-    
-    // Add event listeners for input changes
+    // Setup input listeners
     setupInputListeners();
+    
+    // Setup mobile menu
+    setupMobileMenu();
 });
 
-// Form submission handler
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
+// Setup mobile menu functionality
+function setupMobileMenu() {
+    mobileMenuBtn.addEventListener('click', function() {
+        mobileNav.classList.toggle('active');
+        
+        // Change icon
+        const icon = this.querySelector('i');
+        if (mobileNav.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    });
     
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!mobileMenuBtn.contains(event.target) && !mobileNav.contains(event.target) && mobileNav.classList.contains('active')) {
+            mobileNav.classList.remove('active');
+            mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+            mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+        }
+    });
+}
+
+// Verify button click handler
+verifyButton.addEventListener('click', function() {
     // Get current values
     const forename = forenameInput.value.trim();
     const surname = surnameInput.value.trim();
@@ -68,36 +96,35 @@ form.addEventListener('submit', function(event) {
     }
     
     // Show loading state
-    const verifyBtn = form.querySelector('.verify-btn');
-    const originalText = verifyBtn.textContent;
-    verifyBtn.textContent = 'Verifying...';
-    verifyBtn.disabled = true;
+    const originalText = verifyButton.textContent;
+    verifyButton.textContent = 'Verifying...';
+    verifyButton.disabled = true;
     
     // Simulate API call delay
     setTimeout(() => {
         // Check if certificate is valid
         const isValid = checkCertificate(forename, surname, cert);
         
+        // Show results area
+        resultsArea.style.display = 'block';
+        
         // Show appropriate result
         if (isValid) {
-            showValidResult();
+            showValidResult(forename, surname, cert);
         } else {
             showErrorResult(forename, surname, cert);
         }
         
         // Reset button
-        verifyBtn.textContent = originalText;
-        verifyBtn.disabled = false;
-        
-        // Update result details
-        updateResultDetails();
+        verifyButton.textContent = originalText;
+        verifyButton.disabled = false;
         
         // Scroll to results
-        document.querySelector('.results-area').scrollIntoView({ 
+        resultsArea.scrollIntoView({ 
             behavior: 'smooth',
             block: 'start'
         });
-    }, 1000);
+    }, 1500);
 });
 
 // Check if certificate exists in valid list
@@ -110,14 +137,14 @@ function checkCertificate(forename, surname, cert) {
 }
 
 // Show valid result
-function showValidResult() {
+function showValidResult(forename, surname, cert) {
     validResult.style.display = 'block';
     errorResult.style.display = 'none';
     
     // Update valid result details
-    document.getElementById('resultForename').textContent = forenameInput.value;
-    document.getElementById('resultSurname').textContent = surnameInput.value;
-    document.getElementById('resultCertNum').textContent = certInput.value;
+    document.getElementById('resultForename').textContent = forename;
+    document.getElementById('resultSurname').textContent = surname;
+    document.getElementById('resultCertNum').textContent = cert;
 }
 
 // Show error result
@@ -129,26 +156,6 @@ function showErrorResult(forename, surname, cert) {
     document.getElementById('errorForename').textContent = forename;
     document.getElementById('errorSurname').textContent = surname;
     document.getElementById('errorCertNum').textContent = cert;
-}
-
-// Update result details based on current inputs
-function updateResultDetails() {
-    const forename = forenameInput.value;
-    const surname = surnameInput.value;
-    const cert = certInput.value;
-    
-    // Check if we should show valid or error
-    const isValid = checkCertificate(forename, surname, cert);
-    
-    if (isValid) {
-        showValidResult();
-    } else {
-        // Only show error if fields have been edited from defaults
-        const isDefault = forename === "Grace" && surname === "Okafor" && cert === "513-10458661-398825-20230515";
-        if (!isDefault) {
-            showErrorResult(forename, surname, cert);
-        }
-    }
 }
 
 // Setup input change listeners
@@ -166,12 +173,6 @@ function setupInputListeners() {
             } else {
                 this.classList.remove('edited');
             }
-            
-            // Update results in real-time after a short delay
-            clearTimeout(this.updateTimeout);
-            this.updateTimeout = setTimeout(() => {
-                updateResultDetails();
-            }, 500);
         });
         
         // Clear field on focus if it contains default value
@@ -195,9 +196,6 @@ function setupInputListeners() {
                 this.value = "513-10458661-398825-20230515";
                 this.classList.remove('edited');
             }
-            
-            // Update results
-            updateResultDetails();
         });
     });
 }
@@ -214,8 +212,8 @@ function scrollToForm() {
     }, 500);
 }
 
-// Add a function to test with other valid certificates
-function testWithCertificate(forename, surname, cert) {
+// Test function (for debugging)
+function testVerification(forename, surname, cert) {
     forenameInput.value = forename;
     surnameInput.value = surname;
     certInput.value = cert;
@@ -228,30 +226,33 @@ function testWithCertificate(forename, surname, cert) {
     });
     
     // Trigger verification
-    updateResultDetails();
-    
-    // Scroll to results
-    document.querySelector('.results-area').scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-    });
+    verifyButton.click();
 }
 
-// Optional: Add keyboard shortcuts for testing
+// Keyboard shortcuts for testing
 document.addEventListener('keydown', function(event) {
     // Ctrl+1 for default valid certificate
     if (event.ctrlKey && event.key === '1') {
         event.preventDefault();
-        testWithCertificate("Grace", "Okafor", "513-10458661-398825-20230515");
+        testVerification("Grace", "Okafor", "513-10458661-398825-20230515");
     }
     // Ctrl+2 for another valid certificate
     else if (event.ctrlKey && event.key === '2') {
         event.preventDefault();
-        testWithCertificate("John", "Smith", "513-10458662-398826-20230620");
+        testVerification("John", "Smith", "513-10458662-398826-20230620");
     }
     // Ctrl+3 for invalid certificate
     else if (event.ctrlKey && event.key === '3') {
         event.preventDefault();
-        testWithCertificate("Test", "Invalid", "123-45678901-234567-20230101");
+        testVerification("Test", "Invalid", "123-45678901-234567-20230101");
+    }
+});
+
+// Close mobile menu on window resize (if resized to desktop)
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 768 && mobileNav.classList.contains('active')) {
+        mobileNav.classList.remove('active');
+        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
     }
 });
