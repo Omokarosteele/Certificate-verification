@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate Verification — Training Qualifications UK</title>
+    <!-- QR Code Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <style>
         * {
             margin: 0;
@@ -152,6 +154,7 @@
             width: 100%;
             font-weight: 600;
             transition: background-color 0.3s;
+            margin-top: 10px;
         }
         
         .verify-btn:hover {
@@ -166,18 +169,37 @@
             border-radius: 10px;
         }
         
-        .qr-placeholder {
-            width: 180px;
-            height: 180px;
-            background-color: #eee;
+        #qr-reader {
+            width: 100%;
+            max-width: 400px;
             margin: 0 auto 20px;
+            border: 2px solid #ddd;
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #777;
-            font-weight: bold;
-            border: 2px dashed #ccc;
+            overflow: hidden;
+        }
+        
+        #qr-reader__dashboard_section {
+            background: white;
+            padding: 15px;
+        }
+        
+        #qr-reader__dashboard_section_swaplink {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        
+        .qr-result {
+            background-color: #e8f6ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border-left: 4px solid #3498db;
+            display: none;
         }
         
         .footer {
@@ -220,6 +242,43 @@
             text-decoration: underline;
         }
         
+        .camera-controls {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .camera-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .camera-btn.stop {
+            background-color: #e74c3c;
+        }
+        
+        .camera-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .permission-notice {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            display: none;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -251,6 +310,10 @@
             .footer-image {
                 max-width: 250px;
             }
+            
+            #qr-reader {
+                max-width: 100%;
+            }
         }
         
         @media (max-width: 480px) {
@@ -269,22 +332,40 @@
             .footer-image {
                 max-width: 200px;
             }
+            
+            .camera-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .camera-btn {
+                width: 100%;
+                max-width: 200px;
+            }
         }
         
-        /* Animation for QR code scanner */
-        @keyframes scan {
-            0% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(150px); opacity: 0.7; }
-            100% { transform: translateY(0); opacity: 1; }
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease-out;
         }
         
-        .scan-line {
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background-color: #3498db;
-            animation: scan 2s ease-in-out infinite;
-            top: 0;
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
         }
     </style>
 </head>
@@ -317,17 +398,36 @@
             </div>
             
             <div class="qr-section">
-                <h3>QR Code Verification</h3>
-                <p>Scan the QR code from your certificate for instant verification</p>
-                <div class="qr-placeholder">
-                    <div style="position: relative; width: 100%; height: 100%;">
-                        <div class="scan-line"></div>
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
-                            QR Code Area
-                        </div>
-                    </div>
+                <h3>QR Code Scanner</h3>
+                <p>Point your camera at a QR code from a TQUK certificate</p>
+                
+                <!-- Camera Permission Notice -->
+                <div class="permission-notice" id="permissionNotice">
+                    <strong>Camera Access Required:</strong> Please allow camera access when prompted to scan QR codes.
                 </div>
-                <p>Position your certificate's QR code within the scanner area</p>
+                
+                <!-- QR Code Scanner Container -->
+                <div id="qr-reader"></div>
+                
+                <!-- Camera Controls -->
+                <div class="camera-controls">
+                    <button class="camera-btn" id="startScanner">Start Scanner</button>
+                    <button class="camera-btn stop" id="stopScanner" style="display: none;">Stop Scanner</button>
+                    <button class="camera-btn" id="switchCamera">Switch Camera</button>
+                </div>
+                
+                <!-- QR Scan Results -->
+                <div class="qr-result" id="qrResult">
+                    <h4>Scan Result:</h4>
+                    <p id="qrResultText">No QR code scanned yet</p>
+                    <button class="verify-btn" id="useScannedData" style="display: none; margin-top: 10px; padding: 10px 20px;">
+                        Use This Certificate Data
+                    </button>
+                </div>
+                
+                <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                    <strong>Tip:</strong> Hold your phone steady and ensure good lighting for best results
+                </p>
             </div>
         </div>
         
@@ -397,127 +497,102 @@
     </div>
 
     <script>
-        document.getElementById('verificationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const certNumber = document.getElementById('certificateNumber').value;
-            const learnerName = document.getElementById('learnerName').value;
-            const dob = document.getElementById('dob').value;
-            const certDate = document.getElementById('certificateDate').value;
-            
-            // Simple validation
-            if (!certNumber || !learnerName || !dob || !certDate) {
-                showNotification('Please fill in all required fields.', 'error');
+        // QR Code Scanner Variables
+        let html5QrCode;
+        let cameraId = null;
+        let isScanning = false;
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for camera support
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showNotification('Your device does not support camera access. Please use manual entry.', 'error');
+                document.getElementById('startScanner').disabled = true;
+                document.getElementById('switchCamera').disabled = true;
                 return;
             }
             
-            // Check if certificate date is before 2018
-            const certYear = new Date(certDate).getFullYear();
-            if (certYear < 2018) {
-                showNotification('Certificates issued before 2018 cannot be verified through this system. Please contact our Customer Service Specialists for assistance.', 'warning');
-                return;
-            }
+            // Initialize QR Scanner
+            html5QrCode = new Html5Qrcode("qr-reader");
             
-            // Simulate verification process
-            showNotification('Verifying certificate... Please wait.', 'info');
+            // Show permission notice
+            document.getElementById('permissionNotice').style.display = 'block';
             
-            // Simulate API call delay
-            setTimeout(() => {
-                // In a real application, this would connect to a verification API
-                const isValid = Math.random() > 0.3; // 70% chance of valid certificate for demo
-                
-                if (isValid) {
-                    showNotification(`Certificate #${certNumber} verified successfully! This certificate is valid and authentic.`, 'success');
-                } else {
-                    showNotification(`Certificate #${certNumber} could not be verified. Please check the details and try again, or contact support.`, 'error');
-                }
-            }, 2000);
+            // Set up event listeners
+            document.getElementById('startScanner').addEventListener('click', startScanner);
+            document.getElementById('stopScanner').addEventListener('click', stopScanner);
+            document.getElementById('switchCamera').addEventListener('click', switchCamera);
+            document.getElementById('useScannedData').addEventListener('click', useScannedData);
+            
+            // Form submission
+            document.getElementById('verificationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                verifyCertificateManually();
+            });
+            
+            // Date restrictions
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('certificateDate').setAttribute('max', today);
+            
+            const minDOB = new Date();
+            minDOB.setFullYear(minDOB.getFullYear() - 100);
+            document.getElementById('dob').setAttribute('min', minDOB.toISOString().split('T')[0]);
+            document.getElementById('dob').setAttribute('max', today);
         });
         
-        // Set max date for certificate date to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('certificateDate').setAttribute('max', today);
-        
-        // Set reasonable min date for date of birth (assuming learners are at least 16)
-        const minDOB = new Date();
-        minDOB.setFullYear(minDOB.getFullYear() - 100);
-        document.getElementById('dob').setAttribute('min', minDOB.toISOString().split('T')[0]);
-        document.getElementById('dob').setAttribute('max', today);
-        
-        // Notification function
-        function showNotification(message, type) {
-            // Remove existing notification
-            const existingNotification = document.querySelector('.notification');
-            if (existingNotification) {
-                existingNotification.remove();
-            }
+        // Start QR Code Scanner
+        async function startScanner() {
+            if (isScanning) return;
             
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
+            const qrReader = document.getElementById('qr-reader');
+            const startBtn = document.getElementById('startScanner');
+            const stopBtn = document.getElementById('stopScanner');
+            const permissionNotice = document.getElementById('permissionNotice');
             
-            // Style the notification
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 25px;
-                border-radius: 6px;
-                color: white;
-                font-weight: 600;
-                z-index: 1000;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                animation: slideIn 0.3s ease-out;
-            `;
-            
-            // Set color based on type
-            if (type === 'success') {
-                notification.style.backgroundColor = '#27ae60';
-            } else if (type === 'error') {
-                notification.style.backgroundColor = '#e74c3c';
-            } else if (type === 'warning') {
-                notification.style.backgroundColor = '#f39c12';
-            } else {
-                notification.style.backgroundColor = '#3498db';
-            }
-            
-            // Add to page
-            document.body.appendChild(notification);
-            
-            // Auto remove after 5 seconds
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-out';
-                setTimeout(() => notification.remove(), 300);
-            }, 5000);
-            
-            // Add keyframes for animation
-            if (!document.querySelector('#notification-styles')) {
-                const style = document.createElement('style');
-                style.id = 'notification-styles';
-                style.textContent = `
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                    @keyframes slideOut {
-                        from { transform: translateX(0); opacity: 1; }
-                        to { transform: translateX(100%); opacity: 0; }
-                    }
-                `;
-                document.head.appendChild(style);
+            try {
+                showNotification('Starting camera... Please allow camera access if prompted.', 'info');
+                
+                // Get available cameras
+                const devices = await Html5Qrcode.getCameras();
+                if (devices && devices.length > 0) {
+                    // Use back camera if available, otherwise use first camera
+                    const backCamera = devices.find(device => device.label.toLowerCase().includes('back'));
+                    cameraId = backCamera ? backCamera.id : devices[0].id;
+                    
+                    // Start scanning
+                    await html5QrCode.start(
+                        cameraId,
+                        {
+                            fps: 10,
+                            qrbox: { width: 250, height: 250 },
+                            aspectRatio: 1.0
+                        },
+                        onScanSuccess,
+                        onScanError
+                    );
+                    
+                    isScanning = true;
+                    startBtn.style.display = 'none';
+                    stopBtn.style.display = 'inline-block';
+                    permissionNotice.style.display = 'none';
+                    
+                    showNotification('Camera started. Point at a QR code to scan.', 'success');
+                } else {
+                    showNotification('No camera found on your device.', 'error');
+                }
+            } catch (error) {
+                console.error("Camera error:", error);
+                showNotification('Failed to access camera. Please check permissions.', 'error');
+                permissionNotice.style.display = 'block';
             }
         }
         
-        // Add animation to QR code on hover
-        document.querySelector('.qr-placeholder').addEventListener('mouseenter', function() {
-            this.style.boxShadow = '0 0 20px rgba(52, 152, 219, 0.5)';
-        });
-        
-        document.querySelector('.qr-placeholder').addEventListener('mouseleave', function() {
-            this.style.boxShadow = 'none';
-        });
-    </script>
-</body>
-</html>
+        // Stop QR Code Scanner
+        function stopScanner() {
+            if (!isScanning) return;
+            
+            html5QrCode.stop().then(() => {
+                isScanning = false;
+                document.getElementById('startScanner').style.display = 'inline-block';
+                document.getElementById('stopScanner').style.display = 'none';
+                showNotifi
