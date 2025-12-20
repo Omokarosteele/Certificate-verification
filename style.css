@@ -46,7 +46,7 @@ body {
 }
 
 .header-logo {
-    height: 70px; /* Bigger logo */
+    height: 100px; /* Bigger logo */
     max-width: 100%;
     filter: brightness(0) invert(1); /* Makes logo white */
 }
