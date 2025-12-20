@@ -235,15 +235,7 @@ body {
     text-align: left;
 }
 
-.main-title {
-    font-size: 36px;
-    color: #333;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-transform: none;
-}
-
-/* Certificate Verification with Background Image */
+/* Certificate Verification as H1 with Background Image */
 .certificate-verification-container {
     position: relative;
     display: inline-block;
@@ -264,15 +256,16 @@ body {
     border-radius: 8px;
 }
 
-.subtitle {
+.main-title {
     position: relative;
     z-index: 2;
-    font-size: 32px;
+    font-size: 42px; /* Larger as H1 */
     color: #333;
-    font-weight: 600;
-    padding: 15px 25px;
+    font-weight: 700;
+    padding: 20px 30px;
     margin: 0;
     text-transform: none;
+    line-height: 1.2;
 }
 
 /* Content Section */
@@ -335,9 +328,9 @@ body {
     border-bottom: 2px solid #f0f0f0;
 }
 
-.form-header h3 {
+.form-header h2 {
     color: #333;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 600;
     text-align: center;
 }
@@ -441,9 +434,9 @@ body {
     color: #ef4444;
 }
 
-.result-header h4 {
+.result-header h3 {
     color: #333;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 600;
 }
 
@@ -646,12 +639,8 @@ footer {
     }
     
     .main-title {
-        font-size: 28px;
-    }
-    
-    .subtitle {
-        font-size: 26px;
-        padding: 12px 20px;
+        font-size: 34px; /* Slightly smaller on mobile */
+        padding: 15px 25px;
     }
     
     .result-details p {
@@ -676,11 +665,8 @@ footer {
     }
     
     .main-title {
-        font-size: 24px;
-    }
-    
-    .subtitle {
-        font-size: 22px;
+        font-size: 28px;
+        padding: 12px 20px;
     }
     
     .form-wrapper {
