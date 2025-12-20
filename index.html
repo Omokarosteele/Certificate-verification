@@ -241,11 +241,24 @@
             padding: 10px;
             border-radius: 4px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             color: #1a237e;
             border: 2px solid #1a237e;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        
+        .qr-code .name {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .qr-code .cert-number {
+            font-size: 0.7rem;
+            color: #666;
         }
         
         .download-qr {
@@ -257,6 +270,12 @@
             cursor: pointer;
             margin-top: 10px;
             font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .download-qr:hover {
+            background-color: #283593;
+            transform: translateY(-1px);
         }
         
         .footer {
@@ -304,13 +323,28 @@
         /* Success Message Styling */
         .success-message {
             display: none;
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 2px solid #28a745;
             color: #155724;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 25px;
             animation: fadeIn 0.5s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+        }
+        
+        .success-message h3 {
+            color: #155724;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+        }
+        
+        .success-message .verified-details {
+            background-color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
         }
         
         @keyframes fadeIn {
@@ -364,6 +398,12 @@
             .header-accent {
                 margin: 10px auto 0 auto;
             }
+            
+            .qr-code {
+                width: 120px;
+                height: 120px;
+                font-size: 0.7rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -390,6 +430,12 @@
             .certificate-table {
                 display: block;
                 overflow-x: auto;
+            }
+            
+            .qr-code {
+                width: 100px;
+                height: 100px;
+                font-size: 0.6rem;
             }
         }
         
@@ -474,9 +520,10 @@
             <!-- Success Message Area -->
             <div id="successMessage" class="success-message">
                 <h3>✅ Certificate Verified Successfully!</h3>
-                <p id="verifiedDetails"></p>
+                <div class="verified-details" id="verifiedDetails"></div>
                 <p><strong>Status:</strong> This certificate is valid and authentic.</p>
                 <p><strong>Verification Date:</strong> <span id="verificationDate"></span></p>
+                <p><strong>Training Provider:</strong> <span id="trainingProvider"></span></p>
             </div>
         </div>
         
@@ -524,6 +571,22 @@
             <div class="highlight-box" style="margin-top: 30px;">
                 <p><strong>Need help?</strong> If you're having trouble verifying your certificate, please contact our support team with your certificate details.</p>
             </div>
+            
+            <!-- Test QR Code Section -->
+            <div class="highlight-box" style="margin-top: 20px;">
+                <h3>📱 Test QR Code for Samira Ahmed</h3>
+                <p>Scan this QR code or click the link below to auto-fill Samira Ahmed's certificate details:</p>
+                <div style="text-align: center; margin: 15px 0;">
+                    <div id="samiraQR" class="qr-code">
+                        <div class="name">Samira Ahmed</div>
+                        <div class="cert-number">1622-10682337-592729</div>
+                        <div>SCAN ME</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; text-align: center;">
+                    <a href="#" id="testLink" style="color: #1a237e; font-weight: bold;">Click here to auto-fill Samira's certificate</a>
+                </p>
+            </div>
         </div>
     </div>
     
@@ -546,14 +609,28 @@
     </div>
 
     <script>
+        // SAMIRA AHMED'S CERTIFICATE DETAILS FROM THE IMAGE
+        const samiraAhmedCertificate = {
+            name: "Samira Ahmed Alim Mohamoud",
+            certNumber: "1622-10682337-592729-20250110",
+            dob: "1981-08-06", // August 6th 1981
+            issueDate: "2025-12-19", // 19/12/2025
+            qualification: "Level 4 Diploma in Children, Young People and Families Practitioner (RQF)",
+            qualificationNumber: "601/5633/8",
+            trainingProvider: "West College Scotland",
+            qrData: "1622-10682337-592729-20250110|Samira Ahmed Alim Mohamoud|1981-08-06|2025-12-19|Level 4 Diploma"
+        };
+        
         // List of Verifiable Certificates (Only these will return positive)
         const verifiableCertificates = [
+            samiraAhmedCertificate,
             {
                 name: "John Smith",
                 certNumber: "TQUK-2023-001234",
                 dob: "1990-05-15",
                 issueDate: "2023-06-20",
                 qualification: "Level 3 Diploma",
+                trainingProvider: "London Training College",
                 qrData: "TQUK-2023-001234|John Smith|1990-05-15|2023-06-20|Level 3 Diploma"
             },
             {
@@ -562,31 +639,8 @@
                 dob: "1988-11-22",
                 issueDate: "2023-07-10",
                 qualification: "Level 4 Higher Diploma",
+                trainingProvider: "Manchester Institute",
                 qrData: "TQUK-2023-002567|Sarah Johnson|1988-11-22|2023-07-10|Level 4 Higher Diploma"
-            },
-            {
-                name: "Michael Brown",
-                certNumber: "TQUK-2023-003891",
-                dob: "1995-03-08",
-                issueDate: "2023-08-05",
-                qualification: "Level 2 Certificate",
-                qrData: "TQUK-2023-003891|Michael Brown|1995-03-08|2023-08-05|Level 2 Certificate"
-            },
-            {
-                name: "Emily Davis",
-                certNumber: "TQUK-2023-004123",
-                dob: "1992-09-30",
-                issueDate: "2023-09-15",
-                qualification: "Level 5 Foundation Degree",
-                qrData: "TQUK-2023-004123|Emily Davis|1992-09-30|2023-09-15|Level 5 Foundation Degree"
-            },
-            {
-                name: "Robert Wilson",
-                certNumber: "TQUK-2023-005456",
-                dob: "1985-12-14",
-                issueDate: "2023-10-25",
-                qualification: "Level 1 Award",
-                qrData: "TQUK-2023-005456|Robert Wilson|1985-12-14|2023-10-25|Level 1 Award"
             }
         ];
         
@@ -605,20 +659,22 @@
             verifiableCertificates.forEach((cert, index) => {
                 const row = document.createElement('tr');
                 
-                // Generate QR code (simplified version - in production use a QR library)
+                // Generate QR code container ID
                 const qrCodeId = `qr-code-${index}`;
                 
                 row.innerHTML = `
-                    <td>${cert.name}</td>
-                    <td>${cert.certNumber}</td>
+                    <td><strong>${cert.name}</strong></td>
+                    <td><code>${cert.certNumber}</code></td>
                     <td>${cert.issueDate}</td>
-                    <td>${cert.qualification}</td>
+                    <td>${cert.qualification.split(' ')[0]} ${cert.qualification.split(' ')[1]}</td>
                     <td>
                         <div class="qr-code-container">
                             <div id="${qrCodeId}" class="qr-code">
-                                QR CODE<br>${cert.certNumber}
+                                <div class="name">${cert.name.split(' ')[0]}</div>
+                                <div class="cert-number">${cert.certNumber.substring(0, 20)}...</div>
+                                <div>SCAN ME</div>
                             </div>
-                            <button class="download-qr" onclick="downloadQRCode('${qrCodeId}', '${cert.name}')">
+                            <button class="download-qr" onclick="downloadQRCode('${cert.name}', '${cert.certNumber}', '${cert.qrData}')">
                                 Download QR
                             </button>
                         </div>
@@ -629,6 +685,7 @@
                 
                 // Store QR data for scanning
                 document.getElementById(qrCodeId).setAttribute('data-qr', cert.qrData);
+                document.getElementById(qrCodeId).setAttribute('onclick', `scanQRCode('${cert.qrData}')`);
             });
         }
         
@@ -678,7 +735,7 @@
                     // Show success message
                     showSuccessMessage(certDetails);
                     
-                    showNotification(`Certificate #${certNumber} verified successfully! This certificate is valid and authentic.`, 'success');
+                    showNotification(`✅ Certificate #${certNumber} verified successfully! This certificate is valid and authentic.`, 'success');
                 } else {
                     // Check if it's a non-verifiable test certificate
                     const isTestCert = nonVerifiableCertificates.some(cert => 
@@ -686,9 +743,9 @@
                     );
                     
                     if (isTestCert) {
-                        showNotification(`Certificate #${certNumber} is a test certificate and cannot be verified.`, 'warning');
+                        showNotification(`⚠️ Certificate #${certNumber} is a test certificate and cannot be verified.`, 'warning');
                     } else {
-                        showNotification(`Certificate #${certNumber} could not be verified. Please check the details and try again, or contact support.`, 'error');
+                        showNotification(`❌ Certificate #${certNumber} could not be verified. Please check the details and try again, or contact support.`, 'error');
                     }
                 }
             }, 1500);
@@ -699,32 +756,104 @@
             const successMessage = document.getElementById('successMessage');
             const verifiedDetails = document.getElementById('verifiedDetails');
             const verificationDate = document.getElementById('verificationDate');
+            const trainingProvider = document.getElementById('trainingProvider');
             
-            verifiedDetails.innerHTML = `
-                <strong>Certificate Holder:</strong> ${certDetails.name}<br>
-                <strong>Certificate Number:</strong> ${certDetails.certNumber}<br>
-                <strong>Qualification:</strong> ${certDetails.qualification}<br>
-                <strong>Issue Date:</strong> ${certDetails.issueDate}
-            `;
+            // Special styling for Samira's certificate
+            if (certDetails.name === "Samira Ahmed Alim Mohamoud") {
+                verifiedDetails.innerHTML = `
+                    <strong>Certificate Holder:</strong> ${certDetails.name}<br>
+                    <strong>Certificate Number:</strong> ${certDetails.certNumber}<br>
+                    <strong>Qualification:</strong> ${certDetails.qualification}<br>
+                    <strong>Qualification Number:</strong> ${certDetails.qualificationNumber}<br>
+                    <strong>Awarded On:</strong> ${certDetails.issueDate}<br>
+                    <strong>Date of Birth:</strong> August 6, 1981
+                `;
+            } else {
+                verifiedDetails.innerHTML = `
+                    <strong>Certificate Holder:</strong> ${certDetails.name}<br>
+                    <strong>Certificate Number:</strong> ${certDetails.certNumber}<br>
+                    <strong>Qualification:</strong> ${certDetails.qualification}<br>
+                    <strong>Issue Date:</strong> ${certDetails.issueDate}
+                `;
+            }
             
-            verificationDate.textContent = new Date().toLocaleDateString();
+            trainingProvider.textContent = certDetails.trainingProvider || "Training Qualifications UK";
+            verificationDate.textContent = new Date().toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+            
             successMessage.style.display = 'block';
             
-            // Auto-hide after 10 seconds
+            // Scroll to success message
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Auto-hide after 15 seconds
             setTimeout(() => {
                 successMessage.style.display = 'none';
-            }, 10000);
+            }, 15000);
+        }
+        
+        // Simulate QR code scanning
+        function scanQRCode(qrData) {
+            // Parse QR data (format: certNumber|name|dob|issueDate|qualification)
+            const parts = qrData.split('|');
+            if (parts.length >= 5) {
+                const [certNumber, name, dob, issueDate, qualification] = parts;
+                
+                // Auto-fill the form
+                document.getElementById('certificateNumber').value = certNumber;
+                document.getElementById('learnerName').value = name;
+                document.getElementById('dob').value = dob;
+                document.getElementById('certificateDate').value = issueDate;
+                
+                // Find the matching qualification value
+                const qualificationSelect = document.getElementById('qualification');
+                const qualText = qualification.toLowerCase();
+                let foundValue = '';
+                
+                for (let option of qualificationSelect.options) {
+                    if (qualText.includes(option.text.toLowerCase())) {
+                        foundValue = option.value;
+                        break;
+                    }
+                }
+                
+                if (foundValue) {
+                    qualificationSelect.value = foundValue;
+                } else if (qualText.includes('level 4')) {
+                    qualificationSelect.value = 'level4';
+                } else if (qualText.includes('level 3')) {
+                    qualificationSelect.value = 'level3';
+                } else if (qualText.includes('level 2')) {
+                    qualificationSelect.value = 'level2';
+                } else if (qualText.includes('level 1')) {
+                    qualificationSelect.value = 'level1';
+                } else if (qualText.includes('level 5')) {
+                    qualificationSelect.value = 'level5';
+                } else {
+                    qualificationSelect.value = 'other';
+                }
+                
+                showNotification('Certificate data loaded from QR code! Click "Verify Certificate" to confirm.', 'info');
+            }
         }
         
         // Download QR Code (simplified)
-        function downloadQRCode(qrId, name) {
-            const qrElement = document.getElementById(qrId);
-            const qrData = qrElement.getAttribute('data-qr');
-            
-            // In a real application, you would generate an actual QR code image
-            // For this demo, we'll create a simple text file with the QR data
+        function downloadQRCode(name, certNumber, qrData) {
+            // Create a simple text file with QR data
             const element = document.createElement('a');
-            const file = new Blob([`QR Code for ${name}\n\nData: ${qrData}\n\nScan this QR code to auto-fill verification form.`], {type: 'text/plain'});
+            const qrURL = `${window.location.origin}${window.location.pathname}?qr=${encodeURIComponent(qrData)}`;
+            const fileContent = `TQUK Certificate QR Code\n\n` +
+                              `Certificate Holder: ${name}\n` +
+                              `Certificate Number: ${certNumber}\n` +
+                              `QR Code Data: ${qrData}\n\n` +
+                              `Scan this QR code or visit this URL to auto-fill verification:\n` +
+                              `${qrURL}\n\n` +
+                              `This certificate is pre-verified and will return a positive result.`;
+            
+            const file = new Blob([fileContent], {type: 'text/plain'});
             element.href = URL.createObjectURL(file);
             element.download = `TQUK-QR-${name.replace(/\s+/g, '-')}.txt`;
             document.body.appendChild(element);
@@ -740,25 +869,18 @@
             const qrData = urlParams.get('qr');
             
             if (qrData) {
-                // Parse QR data (format: certNumber|name|dob|issueDate|qualification)
+                scanQRCode(qrData);
+                
+                // If it's a verifiable certificate, show success message
                 const parts = qrData.split('|');
                 if (parts.length >= 5) {
-                    const [certNumber, name, dob, issueDate, qualification] = parts;
-                    
-                    // Auto-fill the form
-                    document.getElementById('certificateNumber').value = certNumber;
-                    document.getElementById('learnerName').value = name;
-                    document.getElementById('dob').value = dob;
-                    document.getElementById('certificateDate').value = issueDate;
-                    document.getElementById('qualification').value = qualification.toLowerCase().replace(/\s+/g, '');
-                    
-                    // Check if this is a verifiable certificate
+                    const [certNumber, name] = parts;
                     if (isCertificateVerifiable(certNumber, name)) {
                         const certDetails = getCertificateDetails(certNumber, name);
-                        showSuccessMessage(certDetails);
-                        showNotification('Certificate data loaded from QR code. Click "Verify Certificate" to confirm.', 'info');
-                    } else {
-                        showNotification('Certificate data loaded from QR code. Click "Verify Certificate" to check verification.', 'info');
+                        setTimeout(() => {
+                            showSuccessMessage(certDetails);
+                            showNotification('✅ Certificate verified from QR code!', 'success');
+                        }, 1000);
                     }
                 }
             }
@@ -766,11 +888,27 @@
         
         // Generate QR code URLs for testing
         function generateQRCodeURLs() {
-            console.log("QR Code URLs for testing:");
+            console.log("📱 QR Code URLs for testing:");
             verifiableCertificates.forEach(cert => {
                 const qrURL = `${window.location.origin}${window.location.pathname}?qr=${encodeURIComponent(cert.qrData)}`;
-                console.log(`${cert.name}: ${qrURL}`);
+                console.log(`👉 ${cert.name}: ${qrURL}`);
             });
+        }
+        
+        // Test link for Samira's certificate
+        function setupTestLink() {
+            const testLink = document.getElementById('testLink');
+            const samiraQR = document.getElementById('samiraQR');
+            
+            testLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                scanQRCode(samiraAhmedCertificate.qrData);
+                showNotification('Samira Ahmed\'s certificate data loaded. Click "Verify Certificate" to see success message.', 'info');
+            });
+            
+            samiraQR.setAttribute('data-qr', samiraAhmedCertificate.qrData);
+            samiraQR.setAttribute('onclick', `scanQRCode('${samiraAhmedCertificate.qrData}')`);
+            samiraQR.style.cursor = 'pointer';
         }
         
         // Date restrictions
@@ -787,6 +925,7 @@
             populateCertificateTable();
             checkURLParameters();
             generateQRCodeURLs();
+            setupTestLink();
         });
         
         // Notification function
@@ -802,13 +941,14 @@
             
             // Set color based on type
             if (type === 'success') {
-                notification.style.backgroundColor = '#27ae60';
+                notification.style.backgroundColor = '#28a745';
             } else if (type === 'error') {
-                notification.style.backgroundColor = '#e74c3c';
+                notification.style.backgroundColor = '#dc3545';
             } else if (type === 'warning') {
-                notification.style.backgroundColor = '#f39c12';
+                notification.style.backgroundColor = '#ffc107';
+                notification.style.color = '#212529';
             } else {
-                notification.style.backgroundColor = '#3498db';
+                notification.style.backgroundColor = '#17a2b8';
             }
             
             document.body.appendChild(notification);
