@@ -8,18 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Dark Blue Header -->
-    <header class="dark-blue-header">
+    <!-- Header with exact blue color from image -->
+    <header class="main-header">
         <div class="header-container">
-            <div class="logo-section">
+            <!-- Logo Only (Bigger) -->
+            <div class="logo-container">
                 <img src="logo.png" alt="Training Qualifications UK" class="header-logo">
-                <div class="logo-text">
-                    <span class="logo-line1">Training</span>
-                    <span class="logo-line2">QualificationsUK</span>
-                </div>
             </div>
             
             <div class="header-right">
+                <!-- Search Icon (Visible on both desktop & mobile) -->
+                <div class="search-icon-container" id="searchIcon">
+                    <i class="fas fa-search"></i>
+                </div>
+                
                 <!-- Mobile Menu Button -->
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
@@ -27,7 +29,7 @@
                 
                 <!-- Desktop Navigation -->
                 <nav class="header-nav">
-                    <div class="header-search">
+                    <div class="search-box">
                         <input type="text" placeholder="Search">
                         <i class="fas fa-search"></i>
                     </div>
@@ -35,6 +37,14 @@
                     <button class="verify-header-btn" onclick="scrollToForm()">Verify Certificate</button>
                 </nav>
             </div>
+        </div>
+        
+        <!-- Mobile Search Box (Hidden by default) -->
+        <div class="mobile-search-box" id="mobileSearchBox">
+            <input type="text" placeholder="Search...">
+            <button class="search-submit">
+                <i class="fas fa-search"></i>
+            </button>
         </div>
         
         <!-- Mobile Navigation -->
@@ -50,6 +60,9 @@
             </a>
             <a href="#" class="mobile-nav-item">
                 <i class="fas fa-phone"></i> Contact
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <i class="fas fa-check-circle"></i> Verify Certificate
             </a>
         </div>
     </header>
