@@ -4,196 +4,520 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate Verification — Training Qualifications UK</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 25px 0;
+            border-bottom: 1px solid #e1e5eb;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .logo-container {
+            margin-right: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            max-height: 80px;
+            width: auto;
+        }
+        
+        .header-text {
+            flex: 1;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .content-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-section {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .verify-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: block;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 1.05rem;
+        }
+        
+        .highlight-box {
+            background-color: #f0f7ff;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .highlight-box p {
+            margin-bottom: 0;
+            color: #2c3e50;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .verify-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .verify-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .qr-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .qr-placeholder {
+            width: 180px;
+            height: 180px;
+            background-color: #eee;
+            margin: 0 auto 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-weight: bold;
+            border: 2px dashed #ccc;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 25px;
+            border-top: 1px solid #e1e5eb;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-top: 30px;
+        }
+        
+        .footer-image {
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            margin-top: 15px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .footer-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .content-section, .form-section {
+                padding: 25px;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .footer-image {
+                max-width: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .content-section, .form-section {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .footer-image {
+                max-width: 200px;
+            }
+        }
+        
+        /* Animation for QR code scanner */
+        @keyframes scan {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(150px); opacity: 0.7; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: #3498db;
+            animation: scan 2s ease-in-out infinite;
+            top: 0;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header with exact blue color from image -->
-    <header class="main-header">
-        <div class="header-container">
-            <!-- Logo Only (Bigger) -->
-            <div class="logo-container">
-                <img src="logo.png" alt="Training Qualifications UK" class="header-logo">
+    <div class="header">
+        <div class="logo-container">
+            <!-- Your logo image -->
+            <img src="logo.png" alt="TQUK Logo" class="logo">
+        </div>
+        <div class="header-text">
+            <h1>Certificate Verification</h1>
+            <p>Training Qualifications UK</p>
+        </div>
+    </div>
+    
+    <!-- Your verification image below the header -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="verify.png" alt="Certificate Verification" class="verify-image">
+    </div>
+    
+    <div class="container">
+        <div class="content-section">
+            <h2>Verify Your Certificate</h2>
+            <p>Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.</p>
+            
+            <p>Fill your details into the form on the right or scan the QR code in the bottom left of your certificate to verify it in seconds.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Important Note:</strong> Only certificates issued from 2018 onwards can be checked below. If your certificate is dated before 2018, please contact our Customer Service Specialists, who can support you with verifying your certificate.</p>
             </div>
             
-            <div class="header-right">
-                <!-- Search Icon (Visible on both desktop & mobile) -->
-                <div class="search-icon-container" id="searchIcon">
-                    <i class="fas fa-search"></i>
-                </div>
-                
-                <!-- Mobile Menu Button -->
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <!-- Desktop Navigation -->
-                <nav class="header-nav">
-                    <div class="search-box">
-                        <input type="text" placeholder="Search">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <a href="#" class="contact-btn">Contact us <i class="fas fa-chevron-right"></i></a>
-                    <button class="verify-header-btn" onclick="scrollToForm()">Verify Certificate</button>
-                </nav>
-            </div>
-        </div>
-        
-        <!-- Mobile Search Box (Hidden by default) -->
-        <div class="mobile-search-box" id="mobileSearchBox">
-            <input type="text" placeholder="Search...">
-            <button class="search-submit">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-        
-        <!-- Mobile Navigation -->
-        <div class="mobile-nav" id="mobileNav">
-            <a href="#" class="mobile-nav-item">
-                <i class="fas fa-home"></i> Home
-            </a>
-            <a href="#" class="mobile-nav-item">
-                <i class="fas fa-certificate"></i> Certificates
-            </a>
-            <a href="#" class="mobile-nav-item">
-                <i class="fas fa-question-circle"></i> Help
-            </a>
-            <a href="#" class="mobile-nav-item">
-                <i class="fas fa-phone"></i> Contact
-            </a>
-            <a href="#" class="mobile-nav-item">
-                <i class="fas fa-check-circle"></i> Verify Certificate
-            </a>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Main Title Section -->
-        <section class="title-section">
-            <div class="title-container">
-                <!-- Certificate Verification as H1 with Background Image -->
-                <div class="certificate-verification-container">
-                    <div class="verification-bg" style="background-image: url('verify.png');"></div>
-                    <h1 class="main-title">Certificate Verification</h1>
-                </div>
-            </div>
-        </section>
-
-        <!-- Content Section -->
-        <section class="content-section">
-            <div class="content-container">
-                <!-- Text Content -->
-                <div class="text-content">
-                    <p>Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.</p>
-                    <p class="highlight-text">Fill your details into the form on the right or scan the QR code in the bottom left of your certificate to verify it in seconds.</p>
-                    <p class="note-text">Only certificates issued from 2018 onwards can be checked below. If your certificate is dated before 2018, please contact our Customer Service Specialists.</p>
-                </div>
-                
-                <!-- Form Container -->
-                <div class="form-container" id="verifyForm">
-                    <div class="form-wrapper">
-                        <div class="form-header">
-                            <h2>Verify Certificate</h2>
-                        </div>
-                        
-                        <form id="verificationForm">
-                            <div class="form-group">
-                                <label for="forename">Forename</label>
-                                <input type="text" id="forename" name="forename" value="Grace" class="editable-field">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="surname">Surname</label>
-                                <input type="text" id="surname" name="surname" value="Okafor" class="editable-field">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="cert">Certification Number</label>
-                                <input type="text" id="cert" name="cert" value="513-10458661-398825-20230515" class="editable-field">
-                            </div>
-
-                            <button type="button" class="verify-btn" id="verifyButton">Verify</button>
-                        </form>
-
-                        <!-- Results Area - Initially hidden -->
-                        <div class="results-area" id="resultsArea" style="display: none;">
-                            <!-- Default/Valid Result -->
-                            <div class="result-container valid-result" id="validResult">
-                                <div class="result-header">
-                                    <div class="result-icon">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div>
-                                    <h3>Certificate Verified</h3>
-                                </div>
-                                <div class="result-details">
-                                    <p><strong>Forename:</strong> <span id="resultForename">Grace</span></p>
-                                    <p><strong>Surname:</strong> <span id="resultSurname">Okafor</span></p>
-                                    <p><strong>Certification Number:</strong> <span id="resultCertNum">513-10458661-398825-20230515</span></p>
-                                </div>
-                                <p class="valid-message">
-                                    <i class="fas fa-search"></i> TQUK can confirm that the certificate information provided matches a valid TQUK certificate.
-                                </p>
-                            </div>
-
-                            <!-- Error Result -->
-                            <div class="result-container error-result" id="errorResult" style="display: none;">
-                                <div class="result-header">
-                                    <div class="result-icon error">
-                                        <i class="fas fa-exclamation-circle"></i>
-                                    </div>
-                                    <h3>Verification Failed</h3>
-                                </div>
-                                <div class="result-details">
-                                    <p><strong>Forename:</strong> <span id="errorForename"></span></p>
-                                    <p><strong>Surname:</strong> <span id="errorSurname"></span></p>
-                                    <p><strong>Certification Number:</strong> <span id="errorCertNum"></span></p>
-                                </div>
-                                <div class="error-message">
-                                    <div class="error-separator"></div>
-                                    <p class="error-text">
-                                        <strong>1.</strong> Those details do not match any certificate on our system. Please double check the certification number and try again.
-                                    </p>
-                                    <div class="error-separator"></div>
-                                </div>
-                                <div class="contact-info">
-                                    <p><i class="fas fa-phone"></i> Call us on 03333 583 344</p>
-                                </div>
-                            </div>
+            <div class="qr-section">
+                <h3>QR Code Verification</h3>
+                <p>Scan the QR code from your certificate for instant verification</p>
+                <div class="qr-placeholder">
+                    <div style="position: relative; width: 100%; height: 100%;">
+                        <div class="scan-line"></div>
+                        <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                            QR Code Area
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Additional Info -->
-        <section class="info-section">
-            <div class="container">
-                <h3>Need Help With Verification?</h3>
-                <p>If you're having trouble verifying a certificate, please ensure you've entered the details exactly as they appear on the certificate. Certificate numbers are case-sensitive and must include all dashes.</p>
-                <p>For certificates issued before 2018, or for any other verification issues, please contact our support team during business hours.</p>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#">Cookie Policy</a>
-                <a href="#">GDPR & Privacy Policy</a>
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Careers</a>
-            </div>
-            <div class="footer-info">
-                <p>Company number: 07827508 | Registered address: Crossgate House, Cross Street, Sale, Manch M33 7FT | © 2025 TQUK. All Rights Reserved</p>
-            </div>
-            <div class="footer-image">
-                <img src="footer.png" alt="TQUK Footer">
+                <p>Position your certificate's QR code within the scanner area</p>
             </div>
         </div>
-    </footer>
+        
+        <div class="form-section">
+            <h2>Verification Form</h2>
+            <p>Enter your certificate details below to verify its authenticity.</p>
+            
+            <form id="verificationForm">
+                <div class="form-group">
+                    <label for="certificateNumber">Certificate Number *</label>
+                    <input type="text" id="certificateNumber" name="certificateNumber" placeholder="Enter your certificate number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="learnerName">Learner's Full Name *</label>
+                    <input type="text" id="learnerName" name="learnerName" placeholder="Enter name as shown on certificate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dob">Date of Birth *</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="certificateDate">Certificate Issue Date *</label>
+                    <input type="date" id="certificateDate" name="certificateDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="qualification">Qualification Type</label>
+                    <select id="qualification" name="qualification">
+                        <option value="">Select qualification type</option>
+                        <option value="level1">Level 1 Award</option>
+                        <option value="level2">Level 2 Certificate</option>
+                        <option value="level3">Level 3 Diploma</option>
+                        <option value="level4">Level 4 Higher Diploma</option>
+                        <option value="level5">Level 5 Foundation Degree</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="verify-btn">Verify Certificate</button>
+            </form>
+            
+            <div class="highlight-box" style="margin-top: 30px;">
+                <p><strong>Need help?</strong> If you're having trouble verifying your certificate, please contact our support team with your certificate details.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <!-- Your footer image -->
+        <img src="foot.png" alt="TQUK Footer" class="footer-image">
+        
+        <p>Training Qualifications UK</p>
+        <p class="contact-info">Email: support@tquk.org | Phone: +44 (0)1234 567890</p>
+        
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+            <a href="#">About TQUK</a>
+            <a href="#">FAQ</a>
+        </div>
+        
+        <p style="margin-top: 25px;">© 2023 Training Qualifications UK. All rights reserved.</p>
+    </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('verificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const certNumber = document.getElementById('certificateNumber').value;
+            const learnerName = document.getElementById('learnerName').value;
+            const dob = document.getElementById('dob').value;
+            const certDate = document.getElementById('certificateDate').value;
+            
+            // Simple validation
+            if (!certNumber || !learnerName || !dob || !certDate) {
+                showNotification('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            // Check if certificate date is before 2018
+            const certYear = new Date(certDate).getFullYear();
+            if (certYear < 2018) {
+                showNotification('Certificates issued before 2018 cannot be verified through this system. Please contact our Customer Service Specialists for assistance.', 'warning');
+                return;
+            }
+            
+            // Simulate verification process
+            showNotification('Verifying certificate... Please wait.', 'info');
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // In a real application, this would connect to a verification API
+                const isValid = Math.random() > 0.3; // 70% chance of valid certificate for demo
+                
+                if (isValid) {
+                    showNotification(`Certificate #${certNumber} verified successfully! This certificate is valid and authentic.`, 'success');
+                } else {
+                    showNotification(`Certificate #${certNumber} could not be verified. Please check the details and try again, or contact support.`, 'error');
+                }
+            }, 2000);
+        });
+        
+        // Set max date for certificate date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('certificateDate').setAttribute('max', today);
+        
+        // Set reasonable min date for date of birth (assuming learners are at least 16)
+        const minDOB = new Date();
+        minDOB.setFullYear(minDOB.getFullYear() - 100);
+        document.getElementById('dob').setAttribute('min', minDOB.toISOString().split('T')[0]);
+        document.getElementById('dob').setAttribute('max', today);
+        
+        // Notification function
+        function showNotification(message, type) {
+            // Remove existing notification
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            // Style the notification
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 6px;
+                color: white;
+                font-weight: 600;
+                z-index: 1000;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            // Set color based on type
+            if (type === 'success') {
+                notification.style.backgroundColor = '#27ae60';
+            } else if (type === 'error') {
+                notification.style.backgroundColor = '#e74c3c';
+            } else if (type === 'warning') {
+                notification.style.backgroundColor = '#f39c12';
+            } else {
+                notification.style.backgroundColor = '#3498db';
+            }
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+            
+            // Add keyframes for animation
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // Add animation to QR code on hover
+        document.querySelector('.qr-placeholder').addEventListener('mouseenter', function() {
+            this.style.boxShadow = '0 0 20px rgba(52, 152, 219, 0.5)';
+        });
+        
+        document.querySelector('.qr-placeholder').addEventListener('mouseleave', function() {
+            this.style.boxShadow = 'none';
+        });
+    </script>
 </body>
 </html>
