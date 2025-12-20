@@ -478,7 +478,8 @@
             certNumber: "1622-10682337-592729-20250110",
             dob: "1981-08-06", // August 6th 1981
             issueDate: "2025-12-19", // 19/12/2025
-            qualification: "Level 4 Higher Diploma",
+            qualification: "level4", // This is the VALUE for Level 4 Higher Diploma
+            qualificationText: "Level 4 Higher Diploma", // This is the TEXT for display
             qualificationFull: "TQUK Level 4 Diploma in Children, Young People and Families Practitioner (RQF)",
             qualificationNumber: "601/5633/8",
             trainingProvider: "West College Scotland"
@@ -491,13 +492,16 @@
             document.getElementById('learnerName').value = samiraAhmedCertificate.name;
             document.getElementById('dob').value = samiraAhmedCertificate.dob;
             document.getElementById('certificateDate').value = samiraAhmedCertificate.issueDate;
+            
+            // Set qualification to Level 4 Higher Diploma
             document.getElementById('qualification').value = samiraAhmedCertificate.qualification;
         }
         
         // Check if certificate is valid
-        function isCertificateValid(certNumber, learnerName) {
+        function isCertificateValid(certNumber, learnerName, qualification) {
             return certNumber === samiraAhmedCertificate.certNumber && 
-                   learnerName === samiraAhmedCertificate.name;
+                   learnerName === samiraAhmedCertificate.name &&
+                   qualification === samiraAhmedCertificate.qualification;
         }
         
         // Show success message
@@ -539,9 +543,10 @@
             const learnerName = document.getElementById('learnerName').value;
             const dob = document.getElementById('dob').value;
             const certDate = document.getElementById('certificateDate').value;
+            const qualification = document.getElementById('qualification').value;
             
             // Simple validation
-            if (!certNumber || !learnerName || !dob || !certDate) {
+            if (!certNumber || !learnerName || !dob || !certDate || !qualification) {
                 showNotification('Please fill in all required fields.', 'error');
                 return;
             }
@@ -557,7 +562,7 @@
             showNotification('Verifying certificate... Please wait.', 'info');
             
             setTimeout(() => {
-                if (isCertificateValid(certNumber, learnerName)) {
+                if (isCertificateValid(certNumber, learnerName, qualification)) {
                     // Show success message
                     showSuccessMessage();
                     
