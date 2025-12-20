@@ -146,7 +146,7 @@
         }
         
         label {
-            display: block; 
+            display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #2c3e50;
@@ -184,14 +184,6 @@
             background: linear-gradient(135deg, #283593 0%, #303f9f 100%);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(26, 35, 126, 0.3);
-        }
-        
-        .qr-section {
-            text-align: center;
-            margin-top: 40px;
-            padding: 25px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
         }
         
         .footer {
@@ -235,54 +227,6 @@
             text-decoration: underline;
         }
         
-        .camera-controls {
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .camera-btn {
-            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-        
-        .camera-btn.stop {
-            background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
-        }
-        
-        .camera-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(26, 35, 126, 0.2);
-        }
-        
-        .permission-notice {
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 15px 0;
-        }
-        
-        .no-camera {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 15px 0;
-            display: none;
-        }
-        
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -321,7 +265,6 @@
                 max-width: 250px;
             }
             
-            
             .header-accent {
                 margin: 10px auto 0 auto;
             }
@@ -341,16 +284,6 @@
             }
             
             .footer-image {
-                max-width: 200px;
-            }
-            
-            .camera-controls {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .camera-btn {
-                width: 100%;
                 max-width: 200px;
             }
             
@@ -414,56 +347,20 @@
             <h2>Verify Your Certificate</h2>
             <p>Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.</p>
             
-            <p>Fill your details into the form on the right or scan the QR code in the bottom left of your certificate to verify it in seconds.</p>
+            <p>Fill your details into the form on the right to verify it in seconds.</p>
             
             <div class="highlight-box">
                 <p><strong>Important Note:</strong> Only certificates issued from 2018 onwards can be checked below. If your certificate is dated before 2018, please contact our Customer Service Specialists, who can support you with verifying your certificate.</p>
             </div>
             
-            <div class="qr-section">
-                <h3>QR Code Scanner</h3>
-                <p>Point your camera at a QR code from a TQUK certificate</p>
-                
-                <!-- Camera Permission Notice -->
-                <div class="permission-notice" id="permissionNotice">
-                    <strong>📸 Camera Access Required:</strong> This scanner needs camera access to work. Click "Start Scanner" and allow camera permissions when prompted.
-                </div>
-                
-                <!-- No Camera Support -->
-                <div class="no-camera" id="noCamera">
-                    <strong>⚠️ Camera Not Available:</strong> Your device doesn't support camera access or camera permissions are blocked. Please use manual form entry instead.
-                </div>
-                
-                <!-- Video Container -->
-                <div id="video-container" style="display: none;">
-                    <video id="video" playsinline></video>
-                    <canvas id="canvas"></canvas>
-                    <div class="scanner-overlay">
-                        <div class="scanner-frame">
-                            <div class="scanner-line"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Camera Controls -->
-                <div class="camera-controls">
-                    <button class="camera-btn" id="startScanner">Start Scanner</button>
-                    <button class="camera-btn stop" id="stopScanner" style="display: none;">Stop Scanner</button>
-                    <button class="camera-btn" id="switchCamera" style="display: none;">Switch Camera</button>
-                </div>
-                
-                <!-- QR Scan Results -->
-                <div class="qr-result" id="qrResult">
-                    <h4>✅ Scan Result:</h4>
-                    <p id="qrResultText">No QR code scanned yet</p>
-                    <button class="verify-btn" id="useScannedData" style="display: none; margin-top: 10px; padding: 10px 20px;">
-                        Use This Certificate Data
-                    </button>
-                </div>
-                
-                <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
-                    <strong>💡 Tip:</strong> Hold your phone steady and ensure good lighting for best results
-                </p>
+            <div style="margin-top: 40px;">
+                <h3>How to Find Your Certificate Details</h3>
+                <ul style="padding-left: 20px; margin-top: 15px;">
+                    <li style="margin-bottom: 10px;">Certificate number is located at the bottom right of your certificate</li>
+                    <li style="margin-bottom: 10px;">Ensure name matches exactly as shown on certificate</li>
+                    <li style="margin-bottom: 10px;">Check the issue date on your certificate</li>
+                    <li style="margin-bottom: 10px;">Select the correct qualification type from the dropdown</li>
+                </ul>
             </div>
         </div>
         
@@ -533,323 +430,10 @@
     </div>
 
     <script>
-        // QR Scanner Variables
-        let videoStream = null;
-        let mediaStream = null;
-        let currentFacingMode = 'environment'; // Start with back camera
-        let isScanning = false;
-        let scanInterval = null;
-        
-        // DOM Elements
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-        const videoContainer = document.getElementById('video-container');
-        const startBtn = document.getElementById('startScanner');
-        const stopBtn = document.getElementById('stopScanner');
-        const switchBtn = document.getElementById('switchCamera');
-        const permissionNotice = document.getElementById('permissionNotice');
-        const noCameraMsg = document.getElementById('noCamera');
-        
-        // Check for camera support on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            checkCameraSupport();
+        // Form submission
+        document.getElementById('verificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Set up event listeners
-            startBtn.addEventListener('click', startScanner);
-            stopBtn.addEventListener('click', stopScanner);
-            switchBtn.addEventListener('click', switchCamera);
-            document.getElementById('useScannedData').addEventListener('click', useScannedData);
-            
-            // Form submission
-            document.getElementById('verificationForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                verifyCertificateManually();
-            });
-            
-            // Date restrictions
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('certificateDate').setAttribute('max', today);
-            
-            const minDOB = new Date();
-            minDOB.setFullYear(minDOB.getFullYear() - 100);
-            document.getElementById('dob').setAttribute('min', minDOB.toISOString().split('T')[0]);
-            document.getElementById('dob').setAttribute('max', today);
-        });
-        
-        // Check if camera is supported
-        function checkCameraSupport() {
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                showNotification('Your browser does not support camera access.', 'error');
-                permissionNotice.style.display = 'none';
-                noCameraMsg.style.display = 'block';
-                startBtn.disabled = true;
-                return false;
-            }
-            return true;
-        }
-        
-        // Start QR Code Scanner
-        async function startScanner() {
-            if (isScanning) return;
-            
-            if (!checkCameraSupport()) {
-                return;
-            }
-            
-            try {
-                showNotification('Starting camera... Please allow camera access.', 'info');
-                
-                // Get camera stream
-                const constraints = {
-                    video: {
-                        facingMode: currentFacingMode,
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    },
-                    audio: false
-                };
-                
-                mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
-                video.srcObject = mediaStream;
-                videoStream = mediaStream.getVideoTracks()[0];
-                
-                // Wait for video to be ready
-                video.onloadedmetadata = () => {
-                    video.play();
-                    
-                    // Show video container
-                    videoContainer.style.display = 'block';
-                    
-                    // Update UI
-                    startBtn.style.display = 'none';
-                    stopBtn.style.display = 'inline-block';
-                    switchBtn.style.display = 'inline-block';
-                    permissionNotice.style.display = 'none';
-                    noCameraMsg.style.display = 'none';
-                    
-                    isScanning = true;
-                    
-                    // Start scanning for QR codes
-                    scanInterval = setInterval(scanQRCode, 500);
-                    
-                    showNotification('Camera started. Point at a QR code.', 'success');
-                };
-                
-            } catch (error) {
-                console.error('Camera error:', error);
-                
-                if (error.name === 'NotAllowedError') {
-                    showNotification('Camera access denied. Please allow camera permissions.', 'error');
-                    permissionNotice.style.display = 'block';
-                } else if (error.name === 'NotFoundError') {
-                    showNotification('No camera found on your device.', 'error');
-                    noCameraMsg.style.display = 'block';
-                    permissionNotice.style.display = 'none';
-                } else {
-                    showNotification('Failed to access camera: ' + error.message, 'error');
-                }
-                
-                startBtn.style.display = 'inline-block';
-                stopBtn.style.display = 'none';
-                switchBtn.style.display = 'none';
-            }
-        }
-        
-        // Stop QR Code Scanner
-        function stopScanner() {
-            if (!isScanning) return;
-            
-            // Stop scanning interval
-            if (scanInterval) {
-                clearInterval(scanInterval);
-                scanInterval = null;
-            }
-            
-            // Stop video stream
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(track => track.stop());
-                mediaStream = null;
-                videoStream = null;
-                video.srcObject = null;
-            }
-            
-            // Update UI
-            videoContainer.style.display = 'none';
-            startBtn.style.display = 'inline-block';
-            stopBtn.style.display = 'none';
-            switchBtn.style.display = 'none';
-            isScanning = false;
-            
-            showNotification('Camera stopped.', 'info');
-        }
-        
-        // Switch between front and back cameras
-        async function switchCamera() {
-            if (!isScanning) return;
-            
-            try {
-                // Stop current stream
-                if (mediaStream) {
-                    mediaStream.getTracks().forEach(track => track.stop());
-                }
-                
-                // Switch facing mode
-                currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
-                
-                // Get new stream
-                const constraints = {
-                    video: {
-                        facingMode: currentFacingMode,
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    },
-                    audio: false
-                };
-                
-                mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
-                video.srcObject = mediaStream;
-                videoStream = mediaStream.getVideoTracks()[0];
-                
-                showNotification(`Switched to ${currentFacingMode === 'environment' ? 'back' : 'front'} camera`, 'success');
-            } catch (error) {
-                console.error('Switch camera error:', error);
-                showNotification('Failed to switch camera.', 'error');
-            }
-        }
-        
-        // Scan for QR codes in video stream
-        function scanQRCode() {
-            if (!isScanning || !video.videoWidth) return;
-            
-            // Set canvas dimensions to match video
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            // Draw video frame to canvas
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            // Get image data from canvas
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            
-            // Simple QR code detection (simulated)
-            // In a real app, you would use a QR decoding library like jsQR
-            detectQRCode(imageData);
-        }
-        
-        // Simulated QR code detection
-        function detectQRCode(imageData) {
-            // This is a simulation - in reality, you'd use a QR library
-            // For demo purposes, we'll simulate detection with a button
-            
-            // Show simulated QR code option for testing
-            const testBtn = document.getElementById('testQR');
-            if (!testBtn) {
-                const testButton = document.createElement('button');
-                testButton.id = 'testQR';
-                testButton.className = 'camera-btn';
-                testButton.textContent = 'Test with Demo QR Code';
-                testButton.style.marginTop = '10px';
-                testButton.onclick = simulateQRScan;
-                document.querySelector('.camera-controls').appendChild(testButton);
-            }
-        }
-        
-        // Simulate a QR code scan for testing
-        function simulateQRScan() {
-            if (!isScanning) {
-                showNotification('Please start the scanner first.', 'warning');
-                return;
-            }
-            
-            // Simulate scanning a QR code
-            const demoData = {
-                certNumber: "TQUK-" + Math.floor(Math.random() * 1000000),
-                name: "John Smith",
-                dob: "1995-08-15",
-                issueDate: "2023-11-30",
-                qualification: "Level 3 Diploma"
-            };
-            
-            onQRScanSuccess(JSON.stringify(demoData));
-        }
-        
-        // Handle QR code scan success
-        function onQRScanSuccess(decodedText) {
-            // Show result
-            const resultDiv = document.getElementById('qrResult');
-            const resultText = document.getElementById('qrResultText');
-            const useDataBtn = document.getElementById('useScannedData');
-            
-            try {
-                const certData = JSON.parse(decodedText);
-                resultText.innerHTML = `
-                    <strong>Certificate Found:</strong><br>
-                    <strong>Number:</strong> ${certData.certNumber}<br>
-                    <strong>Name:</strong> ${certData.name}<br>
-                    <strong>Issue Date:</strong> ${certData.issueDate}
-                `;
-                
-                useDataBtn.style.display = 'inline-block';
-                useDataBtn.setAttribute('data-cert-data', decodedText);
-                
-                showNotification('QR Code scanned successfully!', 'success');
-                
-                // Auto-populate form after 1 second
-                setTimeout(() => {
-                    populateFormFromQR(certData);
-                }, 1000);
-                
-            } catch (error) {
-                // If not JSON, show raw text
-                resultText.textContent = decodedText;
-                useDataBtn.style.display = 'none';
-                showNotification('QR code scanned, but format not recognized.', 'warning');
-            }
-            
-            resultDiv.style.display = 'block';
-        }
-        
-        // Populate form with scanned data
-        function useScannedData() {
-            const btn = document.getElementById('useScannedData');
-            const certDataStr = btn.getAttribute('data-cert-data');
-            
-            try {
-                const certData = JSON.parse(certDataStr);
-                populateFormFromQR(certData);
-                showNotification('Form populated with scanned data!', 'success');
-            } catch (error) {
-                showNotification('Error parsing certificate data.', 'error');
-            }
-        }
-        
-        // Fill form fields with QR code data
-        function populateFormFromQR(data) {
-            if (data.certNumber) {
-                document.getElementById('certificateNumber').value = data.certNumber;
-            }
-            if (data.name) {
-                document.getElementById('learnerName').value = data.name;
-            }
-            if (data.dob) {
-                document.getElementById('dob').value = data.dob;
-            }
-            if (data.issueDate) {
-                document.getElementById('certificateDate').value = data.issueDate;
-            }
-            if (data.qualification) {
-                const qualValue = data.qualification.toLowerCase().includes('level') ? 
-                    data.qualification.toLowerCase().replace(/\s+/g, '') : '';
-                document.getElementById('qualification').value = qualValue;
-            }
-            
-            // Scroll to form
-            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Manual form verification
-        function verifyCertificateManually() {
             const certNumber = document.getElementById('certificateNumber').value;
             const learnerName = document.getElementById('learnerName').value;
             const dob = document.getElementById('dob').value;
@@ -880,7 +464,16 @@
                     showNotification(`Certificate #${certNumber} could not be verified. Please check the details and try again, or contact support.`, 'error');
                 }
             }, 1500);
-        }
+        });
+        
+        // Date restrictions
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('certificateDate').setAttribute('max', today);
+        
+        const minDOB = new Date();
+        minDOB.setFullYear(minDOB.getFullYear() - 100);
+        document.getElementById('dob').setAttribute('min', minDOB.toISOString().split('T')[0]);
+        document.getElementById('dob').setAttribute('max', today);
         
         // Notification function
         function showNotification(message, type) {
@@ -912,18 +505,6 @@
                 setTimeout(() => notification.remove(), 300);
             }, 5000);
         }
-        
-        // Clean up on page unload
-        window.addEventListener('beforeunload', function() {
-            stopScanner();
-        });
-        
-        // Handle page visibility change
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden && isScanning) {
-                stopScanner();
-            }
-        });
     </script>
 </body>
 </html>
