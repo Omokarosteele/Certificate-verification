@@ -28,7 +28,6 @@ const validCertificates = [
 ];
 
 // DOM elements
-const form = document.getElementById('verificationForm');
 const verifyButton = document.getElementById('verifyButton');
 const resultsArea = document.getElementById('resultsArea');
 const validResult = document.getElementById('validResult');
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     surnameInput.value = "Okafor";
     certInput.value = "513-10458661-398825-20230515";
     
-    // Initially hide results area (no onload verification)
+    // Initially hide results area
     resultsArea.style.display = 'none';
     
     // Setup input listeners
@@ -56,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupMobileMenu();
 });
 
-// Setup mobile menu functionality
+// Setup mobile menu
 function setupMobileMenu() {
     mobileMenuBtn.addEventListener('click', function() {
         mobileNav.classList.toggle('active');
@@ -200,7 +199,7 @@ function setupInputListeners() {
     });
 }
 
-// Scroll to form function (for header button)
+// Scroll to form function
 function scrollToForm() {
     const formSection = document.getElementById('verifyForm');
     formSection.scrollIntoView({ behavior: 'smooth' });
@@ -248,7 +247,7 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-// Close mobile menu on window resize (if resized to desktop)
+// Close mobile menu on window resize
 window.addEventListener('resize', function() {
     if (window.innerWidth > 768 && mobileNav.classList.contains('active')) {
         mobileNav.classList.remove('active');
