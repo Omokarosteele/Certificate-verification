@@ -16,199 +16,69 @@
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
-        /* FULL WIDTH DARK BLUE HEADER */
+        /* DARK BLUE HEADER STYLES */
         .header {
+            display: flex;
+            align-items: center;
+            padding: 25px 0;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
             background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #303f9f 100%);
-            width: 100%;
-            padding: 15px 0;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(26, 35, 126, 0.2);
             position: relative;
-            box-shadow: 0 4px 12px rgba(26, 35, 126, 0.2);
+            overflow: hidden;
         }
         
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            width: 100%;
+            padding: 0 40px;
             position: relative;
+            z-index: 1;
         }
         
         .logo-container {
-            display: flex;
-            align-items: center;
+            margin-right: 30px;
+            margin-bottom: 0;
         }
         
         .logo {
-            max-height: 60px;
+            max-height: 80px;
             width: auto;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
         }
         
-        /* HAMBURGER MENU */
-        .hamburger-menu {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 24px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1001;
+        .header-text {
+            flex: 1;
         }
         
-        .hamburger-menu span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background-color: white;
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-        
-        /* SEARCH ICON */
-        .search-icon {
-            background: transparent;
-            border: none;
+        .header h1 {
             color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
-            margin-left: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .search-icon:hover {
-            transform: scale(1.1);
-        }
-        
-        /* NAVIGATION MENU */
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-            margin-left: 40px;
-        }
-        
-        .nav-menu li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            padding: 8px 0;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-menu li a:hover {
-            opacity: 0.9;
-        }
-        
-        .nav-menu li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #4fc3f7;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-menu li a:hover::after {
-            width: 100%;
-        }
-        
-        /* SEARCH BAR */
-        .search-container {
-            position: absolute;
-            top: 100%;
-            right: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            display: none;
-            z-index: 1000;
-            width: 300px;
-        }
-        
-        .search-container.active {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .search-container input {
-            width: 100%;
-            padding: 10px 15px;
-            border: 2px solid #e1e5eb;
-            border-radius: 6px;
-            font-size: 1rem;
-            outline: none;
-        }
-        
-        .search-container input:focus {
-            border-color: #1a237e;
-        }
-        
-        /* MAIN CONTENT */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        .hero-section {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .hero-text {
-            position: relative;
-            margin-bottom: 30px;
-        }
-        
-        .hero-text h1 {
-            color: #1a237e;
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             font-weight: 700;
         }
         
-        .hero-text p {
-            color: #555;
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
             font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto 25px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         
-        .verify-image {
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            margin: 0 auto;
-            display: block;
+        .header-accent {
+            height: 4px;
+            background: linear-gradient(90deg, #4fc3f7 0%, #29b6f6 50%, #0288d1 100%);
+            width: 100px;
+            margin-top: 10px;
+            border-radius: 2px;
         }
         
         .container {
@@ -234,6 +104,16 @@
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .verify-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: block;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
         }
         
         h2 {
@@ -306,29 +186,109 @@
             box-shadow: 0 4px 12px rgba(26, 35, 126, 0.3);
         }
         
+        .qr-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        /* QR SCANNER STYLES */
+        #video-container {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            margin: 0 auto 20px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #ddd;
+            background-color: #000;
+        }
+        
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        .scanner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .scanner-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            border: 2px solid #4fc3f7;
+            border-radius: 8px;
+            box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        }
+        
+        .scanner-line {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #4fc3f7, transparent);
+            animation: scan 2s ease-in-out infinite;
+        }
+        
+        @keyframes scan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+        
+        .qr-result {
+            background-color: #e8f6ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border-left: 4px solid #3498db;
+            display: none;
+        }
+        
         .footer {
             text-align: center;
-            padding: 40px 20px;
-            background: #2c3e50;
-            color: white;
-            margin-top: 60px;
+            padding: 25px;
+            border-top: 1px solid #e1e5eb;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-top: 30px;
         }
         
         .footer-image {
             max-width: 300px;
             height: auto;
             margin-bottom: 20px;
-            filter: brightness(0) invert(1);
         }
         
         .contact-info {
             margin-top: 15px;
             font-weight: 600;
-            color: #ecf0f1;
+            color: #2c3e50;
         }
         
         .footer-links {
-            margin-top: 25px;
+            margin-top: 20px;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
@@ -336,81 +296,63 @@
         }
         
         .footer-links a {
-            color: #3498db;
+            color: #1a237e;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
         }
         
         .footer-links a:hover {
-            color: #4fc3f7;
+            color: #283593;
             text-decoration: underline;
         }
         
-        /* MOBILE MENU */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 280px;
-            height: 100vh;
+        .camera-controls {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .camera-btn {
             background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-            padding: 80px 30px 30px;
-            transition: left 0.4s ease;
-            z-index: 1000;
-            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .mobile-menu.active {
-            left: 0;
-        }
-        
-        .mobile-menu ul {
-            list-style: none;
-        }
-        
-        .mobile-menu li {
-            margin-bottom: 20px;
-        }
-        
-        .mobile-menu a {
             color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 10px 15px;
-            display: block;
+            border: none;
+            padding: 12px 24px;
             border-radius: 6px;
-            transition: background-color 0.3s;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.95rem;
         }
         
-        .mobile-menu a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+        .camera-btn.stop {
+            background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
         }
         
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+        .camera-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(26, 35, 126, 0.2);
+        }
+        
+        .permission-notice {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .no-camera {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
             display: none;
-            z-index: 999;
-        }
-        
-        .menu-overlay.active {
-            display: block;
-        }
-        
-        /* RESPONSIVE DESIGN */
-        @media (max-width: 992px) {
-            .nav-menu {
-                gap: 20px;
-            }
-            
-            .hero-text h1 {
-                font-size: 2.2rem;
-            }
         }
         
         @media (max-width: 768px) {
@@ -423,53 +365,77 @@
                 padding: 25px;
             }
             
-            .hero-text h1 {
-                font-size: 2rem;
+            .header {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 0;
             }
             
-            .nav-menu {
-                display: none;
+            .header-content {
+                flex-direction: column;
+                padding: 0 20px;
             }
             
-            .hamburger-menu {
-                display: flex;
+            .logo-container {
+                margin-right: 0;
+                margin-bottom: 20px;
             }
             
-            .header-right {
-                display: flex;
-                align-items: center;
+            .header h1 {
+                font-size: 1.8rem;
             }
             
-            .search-container {
-                width: 250px;
-                right: 10px;
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .footer-image {
+                max-width: 250px;
+            }
+            
+            #video-container {
+                max-width: 100%;
+                height: 250px;
+            }
+            
+            .header-accent {
+                margin: 10px auto 0 auto;
             }
         }
         
         @media (max-width: 480px) {
-            .main-container {
-                padding: 30px 15px;
+            body {
+                padding: 15px;
             }
             
             .content-section, .form-section {
                 padding: 20px;
             }
             
-            .hero-text h1 {
-                font-size: 1.8rem;
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .footer-image {
+                max-width: 200px;
+            }
+            
+            .camera-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .camera-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .header {
+                padding: 15px 0;
             }
             
             .header-content {
                 padding: 0 15px;
-            }
-            
-            .search-container {
-                width: calc(100% - 30px);
-                right: 15px;
-            }
-            
-            .footer-image {
-                max-width: 250px;
             }
         }
         
@@ -499,137 +465,127 @@
     </style>
 </head>
 <body>
-    <!-- FULL WIDTH DARK BLUE HEADER -->
+    <!-- DARK BLUE HEADER -->
     <div class="header">
         <div class="header-content">
-            <!-- Logo -->
             <div class="logo-container">
+                <!-- Your logo image -->
                 <img src="logo.png" alt="TQUK Logo" class="logo">
             </div>
-            
-            <!-- Desktop Navigation -->
-            <ul class="nav-menu">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Verify Certificate</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">FAQ</a></li>
-            </ul>
-            
-            <!-- Right side: Search and Hamburger -->
-            <div class="header-right">
-                <!-- Search Icon -->
-                <button class="search-icon" id="searchToggle">
-                    🔍
-                </button>
-                
-                <!-- Hamburger Menu (Mobile) -->
-                <button class="hamburger-menu" id="hamburgerToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-            
-            <!-- Search Bar -->
-            <div class="search-container" id="searchContainer">
-                <input type="text" placeholder="Search certificates, qualifications..." id="searchInput">
+            <div class="header-text">
+                <h1>Certificate Verification</h1>
+                <p>Training Qualifications UK</p>
+                <div class="header-accent"></div>
             </div>
         </div>
     </div>
     
-    <!-- Mobile Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-    
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Verify Certificate</a></li>
-            <li><a href="#">About TQUK</a></li>
-            <li><a href="#">Qualifications</a></li>
-            <li><a href="#">Centers</a></li>
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-        </ul>
+    <!-- Your verification image below the header -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="verify.png" alt="Certificate Verification" class="verify-image">
     </div>
     
-    <!-- MAIN CONTENT -->
-    <div class="main-container">
-        <!-- Hero Section with Text ABOVE Image -->
-        <div class="hero-section">
-            <div class="hero-text">
-                <h1>Certificate Verification</h1>
-                <p>Verify the authenticity of Training Qualifications UK certificates instantly. Our verification system helps employers, educational institutions, and stakeholders confirm the credibility of achievements with confidence.</p>
+    <div class="container">
+        <div class="content-section">
+            <h2>Verify Your Certificate</h2>
+            <p>Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.</p>
+            
+            <p>Fill your details into the form on the right or scan the QR code in the bottom left of your certificate to verify it in seconds.</p>
+            
+            <div class="highlight-box">
+                <p><strong>Important Note:</strong> Only certificates issued from 2018 onwards can be checked below. If your certificate is dated before 2018, please contact our Customer Service Specialists, who can support you with verifying your certificate.</p>
             </div>
-            <img src="verify.png" alt="Certificate Verification" class="verify-image">
+            
+            <div class="qr-section">
+                <h3>QR Code Scanner</h3>
+                <p>Point your camera at a QR code from a TQUK certificate</p>
+                
+                <!-- Camera Permission Notice -->
+                <div class="permission-notice" id="permissionNotice">
+                    <strong>📸 Camera Access Required:</strong> This scanner needs camera access to work. Click "Start Scanner" and allow camera permissions when prompted.
+                </div>
+                
+                <!-- No Camera Support -->
+                <div class="no-camera" id="noCamera">
+                    <strong>⚠️ Camera Not Available:</strong> Your device doesn't support camera access or camera permissions are blocked. Please use manual form entry instead.
+                </div>
+                
+                <!-- Video Container -->
+                <div id="video-container" style="display: none;">
+                    <video id="video" playsinline></video>
+                    <canvas id="canvas"></canvas>
+                    <div class="scanner-overlay">
+                        <div class="scanner-frame">
+                            <div class="scanner-line"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Camera Controls -->
+                <div class="camera-controls">
+                    <button class="camera-btn" id="startScanner">Start Scanner</button>
+                    <button class="camera-btn stop" id="stopScanner" style="display: none;">Stop Scanner</button>
+                    <button class="camera-btn" id="switchCamera" style="display: none;">Switch Camera</button>
+                </div>
+                
+                <!-- QR Scan Results -->
+                <div class="qr-result" id="qrResult">
+                    <h4>✅ Scan Result:</h4>
+                    <p id="qrResultText">No QR code scanned yet</p>
+                    <button class="verify-btn" id="useScannedData" style="display: none; margin-top: 10px; padding: 10px 20px;">
+                        Use This Certificate Data
+                    </button>
+                </div>
+                
+                <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
+                    <strong>💡 Tip:</strong> Hold your phone steady and ensure good lighting for best results
+                </p>
+            </div>
         </div>
         
-        <div class="container">
-            <div class="content-section">
-                <h2>How to Verify Your Certificate</h2>
-                <p>Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.</p>
-                
-                <p>Fill your details into the form on the right to verify your certificate in seconds.</p>
-                
-                <div class="highlight-box">
-                    <p><strong>Important Note:</strong> Only certificates issued from 2018 onwards can be checked below. If your certificate is dated before 2018, please contact our Customer Service Specialists, who can support you with verifying your certificate.</p>
-                </div>
-                
-                <h3>Why Verify Certificates?</h3>
-                <ul style="padding-left: 20px; margin-bottom: 20px;">
-                    <li style="margin-bottom: 10px;">Ensure certificate authenticity</li>
-                    <li style="margin-bottom: 10px;">Prevent fraud and misrepresentation</li>
-                    <li style="margin-bottom: 10px;">Confirm qualification details</li>
-                    <li style="margin-bottom: 10px;">Validate for employment or further education</li>
-                </ul>
-            </div>
+        <div class="form-section">
+            <h2>Verification Form</h2>
+            <p>Enter your certificate details below to verify its authenticity.</p>
             
-            <div class="form-section">
-                <h2>Verification Form</h2>
-                <p>Enter your certificate details below to verify its authenticity.</p>
-                
-                <form id="verificationForm">
-                    <div class="form-group">
-                        <label for="certificateNumber">Certificate Number *</label>
-                        <input type="text" id="certificateNumber" name="certificateNumber" placeholder="Enter your certificate number" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="learnerName">Learner's Full Name *</label>
-                        <input type="text" id="learnerName" name="learnerName" placeholder="Enter name as shown on certificate" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="dob">Date of Birth *</label>
-                        <input type="date" id="dob" name="dob" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="certificateDate">Certificate Issue Date *</label>
-                        <input type="date" id="certificateDate" name="certificateDate" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="qualification">Qualification Type</label>
-                        <select id="qualification" name="qualification">
-                            <option value="">Select qualification type</option>
-                            <option value="level1">Level 1 Award</option>
-                            <option value="level2">Level 2 Certificate</option>
-                            <option value="level3">Level 3 Diploma</option>
-                            <option value="level4">Level 4 Higher Diploma</option>
-                            <option value="level5">Level 5 Foundation Degree</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="verify-btn">Verify Certificate</button>
-                </form>
-                
-                <div class="highlight-box" style="margin-top: 30px;">
-                    <p><strong>Need help?</strong> If you're having trouble verifying your certificate, please contact our support team with your certificate details.</p>
+            <form id="verificationForm">
+                <div class="form-group">
+                    <label for="certificateNumber">Certificate Number *</label>
+                    <input type="text" id="certificateNumber" name="certificateNumber" placeholder="Enter your certificate number" required>
                 </div>
+                
+                <div class="form-group">
+                    <label for="learnerName">Learner's Full Name *</label>
+                    <input type="text" id="learnerName" name="learnerName" placeholder="Enter name as shown on certificate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dob">Date of Birth *</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="certificateDate">Certificate Issue Date *</label>
+                    <input type="date" id="certificateDate" name="certificateDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="qualification">Qualification Type</label>
+                    <select id="qualification" name="qualification">
+                        <option value="">Select qualification type</option>
+                        <option value="level1">Level 1 Award</option>
+                        <option value="level2">Level 2 Certificate</option>
+                        <option value="level3">Level 3 Diploma</option>
+                        <option value="level4">Level 4 Higher Diploma</option>
+                        <option value="level5">Level 5 Foundation Degree</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="verify-btn">Verify Certificate</button>
+            </form>
+            
+            <div class="highlight-box" style="margin-top: 30px;">
+                <p><strong>Need help?</strong> If you're having trouble verifying your certificate, please contact our support team with your certificate details.</p>
             </div>
         </div>
     </div>
@@ -649,64 +605,327 @@
             <a href="#">FAQ</a>
         </div>
         
-        <p style="margin-top: 25px; color: #bdc3c7;">© 2023 Training Qualifications UK. All rights reserved.</p>
+        <p style="margin-top: 25px;">© 2023 Training Qualifications UK. All rights reserved.</p>
     </div>
 
     <script>
-        // Mobile Menu Toggle
-        const hamburgerToggle = document.getElementById('hamburgerToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
-        const searchToggle = document.getElementById('searchToggle');
-        const searchContainer = document.getElementById('searchContainer');
-        const searchInput = document.getElementById('searchInput');
+        // QR Scanner Variables
+        let videoStream = null;
+        let mediaStream = null;
+        let currentFacingMode = 'environment'; // Start with back camera
+        let isScanning = false;
+        let scanInterval = null;
         
-        // Toggle Mobile Menu
-        hamburgerToggle.addEventListener('click', function() {
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
-        });
+        // DOM Elements
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const videoContainer = document.getElementById('video-container');
+        const startBtn = document.getElementById('startScanner');
+        const stopBtn = document.getElementById('stopScanner');
+        const switchBtn = document.getElementById('switchCamera');
+        const permissionNotice = document.getElementById('permissionNotice');
+        const noCameraMsg = document.getElementById('noCamera');
         
-        // Close menu when clicking overlay
-        menuOverlay.addEventListener('click', function() {
-            mobileMenu.classList.remove('active');
-            menuOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        
-        // Toggle Search Bar
-        searchToggle.addEventListener('click', function() {
-            searchContainer.classList.toggle('active');
-            if (searchContainer.classList.contains('active')) {
-                searchInput.focus();
-            }
-        });
-        
-        // Close search when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!searchToggle.contains(event.target) && !searchContainer.contains(event.target)) {
-                searchContainer.classList.remove('active');
-            }
-        });
-        
-        // Search functionality
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const query = searchInput.value.trim();
-                if (query) {
-                    showNotification(`Searching for: "${query}"`, 'info');
-                    // In a real app, you would submit the search here
-                    searchInput.value = '';
-                    searchContainer.classList.remove('active');
-                }
-            }
-        });
-        
-        // Form submission
-        document.getElementById('verificationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Check for camera support on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkCameraSupport();
             
+            // Set up event listeners
+            startBtn.addEventListener('click', startScanner);
+            stopBtn.addEventListener('click', stopScanner);
+            switchBtn.addEventListener('click', switchCamera);
+            document.getElementById('useScannedData').addEventListener('click', useScannedData);
+            
+            // Form submission
+            document.getElementById('verificationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                verifyCertificateManually();
+            });
+            
+            // Date restrictions
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('certificateDate').setAttribute('max', today);
+            
+            const minDOB = new Date();
+            minDOB.setFullYear(minDOB.getFullYear() - 100);
+            document.getElementById('dob').setAttribute('min', minDOB.toISOString().split('T')[0]);
+            document.getElementById('dob').setAttribute('max', today);
+        });
+        
+        // Check if camera is supported
+        function checkCameraSupport() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showNotification('Your browser does not support camera access.', 'error');
+                permissionNotice.style.display = 'none';
+                noCameraMsg.style.display = 'block';
+                startBtn.disabled = true;
+                return false;
+            }
+            return true;
+        }
+        
+        // Start QR Code Scanner
+        async function startScanner() {
+            if (isScanning) return;
+            
+            if (!checkCameraSupport()) {
+                return;
+            }
+            
+            try {
+                showNotification('Starting camera... Please allow camera access.', 'info');
+                
+                // Get camera stream
+                const constraints = {
+                    video: {
+                        facingMode: currentFacingMode,
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false
+                };
+                
+                mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = mediaStream;
+                videoStream = mediaStream.getVideoTracks()[0];
+                
+                // Wait for video to be ready
+                video.onloadedmetadata = () => {
+                    video.play();
+                    
+                    // Show video container
+                    videoContainer.style.display = 'block';
+                    
+                    // Update UI
+                    startBtn.style.display = 'none';
+                    stopBtn.style.display = 'inline-block';
+                    switchBtn.style.display = 'inline-block';
+                    permissionNotice.style.display = 'none';
+                    noCameraMsg.style.display = 'none';
+                    
+                    isScanning = true;
+                    
+                    // Start scanning for QR codes
+                    scanInterval = setInterval(scanQRCode, 500);
+                    
+                    showNotification('Camera started. Point at a QR code.', 'success');
+                };
+                
+            } catch (error) {
+                console.error('Camera error:', error);
+                
+                if (error.name === 'NotAllowedError') {
+                    showNotification('Camera access denied. Please allow camera permissions.', 'error');
+                    permissionNotice.style.display = 'block';
+                } else if (error.name === 'NotFoundError') {
+                    showNotification('No camera found on your device.', 'error');
+                    noCameraMsg.style.display = 'block';
+                    permissionNotice.style.display = 'none';
+                } else {
+                    showNotification('Failed to access camera: ' + error.message, 'error');
+                }
+                
+                startBtn.style.display = 'inline-block';
+                stopBtn.style.display = 'none';
+                switchBtn.style.display = 'none';
+            }
+        }
+        
+        // Stop QR Code Scanner
+        function stopScanner() {
+            if (!isScanning) return;
+            
+            // Stop scanning interval
+            if (scanInterval) {
+                clearInterval(scanInterval);
+                scanInterval = null;
+            }
+            
+            // Stop video stream
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+                videoStream = null;
+                video.srcObject = null;
+            }
+            
+            // Update UI
+            videoContainer.style.display = 'none';
+            startBtn.style.display = 'inline-block';
+            stopBtn.style.display = 'none';
+            switchBtn.style.display = 'none';
+            isScanning = false;
+            
+            showNotification('Camera stopped.', 'info');
+        }
+        
+        // Switch between front and back cameras
+        async function switchCamera() {
+            if (!isScanning) return;
+            
+            try {
+                // Stop current stream
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(track => track.stop());
+                }
+                
+                // Switch facing mode
+                currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+                
+                // Get new stream
+                const constraints = {
+                    video: {
+                        facingMode: currentFacingMode,
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false
+                };
+                
+                mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = mediaStream;
+                videoStream = mediaStream.getVideoTracks()[0];
+                
+                showNotification(`Switched to ${currentFacingMode === 'environment' ? 'back' : 'front'} camera`, 'success');
+            } catch (error) {
+                console.error('Switch camera error:', error);
+                showNotification('Failed to switch camera.', 'error');
+            }
+        }
+        
+        // Scan for QR codes in video stream
+        function scanQRCode() {
+            if (!isScanning || !video.videoWidth) return;
+            
+            // Set canvas dimensions to match video
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // Draw video frame to canvas
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Get image data from canvas
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            
+            // Simple QR code detection (simulated)
+            // In a real app, you would use a QR decoding library like jsQR
+            detectQRCode(imageData);
+        }
+        
+        // Simulated QR code detection
+        function detectQRCode(imageData) {
+            // This is a simulation - in reality, you'd use a QR library
+            // For demo purposes, we'll simulate detection with a button
+            
+            // Show simulated QR code option for testing
+            const testBtn = document.getElementById('testQR');
+            if (!testBtn) {
+                const testButton = document.createElement('button');
+                testButton.id = 'testQR';
+                testButton.className = 'camera-btn';
+                testButton.textContent = 'Test with Demo QR Code';
+                testButton.style.marginTop = '10px';
+                testButton.onclick = simulateQRScan;
+                document.querySelector('.camera-controls').appendChild(testButton);
+            }
+        }
+        
+        // Simulate a QR code scan for testing
+        function simulateQRScan() {
+            if (!isScanning) {
+                showNotification('Please start the scanner first.', 'warning');
+                return;
+            }
+            
+            // Simulate scanning a QR code
+            const demoData = {
+                certNumber: "TQUK-" + Math.floor(Math.random() * 1000000),
+                name: "John Smith",
+                dob: "1995-08-15",
+                issueDate: "2023-11-30",
+                qualification: "Level 3 Diploma"
+            };
+            
+            onQRScanSuccess(JSON.stringify(demoData));
+        }
+        
+        // Handle QR code scan success
+        function onQRScanSuccess(decodedText) {
+            // Show result
+            const resultDiv = document.getElementById('qrResult');
+            const resultText = document.getElementById('qrResultText');
+            const useDataBtn = document.getElementById('useScannedData');
+            
+            try {
+                const certData = JSON.parse(decodedText);
+                resultText.innerHTML = `
+                    <strong>Certificate Found:</strong><br>
+                    <strong>Number:</strong> ${certData.certNumber}<br>
+                    <strong>Name:</strong> ${certData.name}<br>
+                    <strong>Issue Date:</strong> ${certData.issueDate}
+                `;
+                
+                useDataBtn.style.display = 'inline-block';
+                useDataBtn.setAttribute('data-cert-data', decodedText);
+                
+                showNotification('QR Code scanned successfully!', 'success');
+                
+                // Auto-populate form after 1 second
+                setTimeout(() => {
+                    populateFormFromQR(certData);
+                }, 1000);
+                
+            } catch (error) {
+                // If not JSON, show raw text
+                resultText.textContent = decodedText;
+                useDataBtn.style.display = 'none';
+                showNotification('QR code scanned, but format not recognized.', 'warning');
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Populate form with scanned data
+        function useScannedData() {
+            const btn = document.getElementById('useScannedData');
+            const certDataStr = btn.getAttribute('data-cert-data');
+            
+            try {
+                const certData = JSON.parse(certDataStr);
+                populateFormFromQR(certData);
+                showNotification('Form populated with scanned data!', 'success');
+            } catch (error) {
+                showNotification('Error parsing certificate data.', 'error');
+            }
+        }
+        
+        // Fill form fields with QR code data
+        function populateFormFromQR(data) {
+            if (data.certNumber) {
+                document.getElementById('certificateNumber').value = data.certNumber;
+            }
+            if (data.name) {
+                document.getElementById('learnerName').value = data.name;
+            }
+            if (data.dob) {
+                document.getElementById('dob').value = data.dob;
+            }
+            if (data.issueDate) {
+                document.getElementById('certificateDate').value = data.issueDate;
+            }
+            if (data.qualification) {
+                const qualValue = data.qualification.toLowerCase().includes('level') ? 
+                    data.qualification.toLowerCase().replace(/\s+/g, '') : '';
+                document.getElementById('qualification').value = qualValue;
+            }
+            
+            // Scroll to form
+            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Manual form verification
+        function verifyCertificateManually() {
             const certNumber = document.getElementById('certificateNumber').value;
             const learnerName = document.getElementById('learnerName').value;
             const dob = document.getElementById('dob').value;
@@ -737,16 +956,7 @@
                     showNotification(`Certificate #${certNumber} could not be verified. Please check the details and try again, or contact support.`, 'error');
                 }
             }, 1500);
-        });
-        
-        // Date restrictions
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('certificateDate').setAttribute('max', today);
-        
-        const minDOB = new Date();
-        minDOB.setFullYear(minDOB.getFullYear() - 100);
-        document.getElementById('dob').setAttribute('min', minDOB.toISOString().split('T')[0]);
-        document.getElementById('dob').setAttribute('max', today);
+        }
         
         // Notification function
         function showNotification(message, type) {
@@ -779,18 +989,16 @@
             }, 5000);
         }
         
-        // Close mobile menu on link click
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                menuOverlay.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+            stopScanner();
         });
         
-        // Animate hamburger menu on click
-        hamburgerToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
+        // Handle page visibility change
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && isScanning) {
+                stopScanner();
+            }
         });
     </script>
 </body>
