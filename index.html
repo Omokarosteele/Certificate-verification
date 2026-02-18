@@ -475,15 +475,15 @@
 
     <script>
         // --------------------------------------------------------------
-        // CERTIFICATE DATABASE (now contains two independent certificates)
+        // CERTIFICATE DATABASE – both certificates now share the same full name
         // --------------------------------------------------------------
         const certificates = [
             {
-                // Certificate 1 (Samira Ahmed) – DOB retained as 1981-08-06
-                name: "Samira Ahmed",
+                // Certificate 1 – original Level 4, DOB retained 06/08/1981
+                name: "Samira Ahmed Alim Mohamoud",          // updated to full name
                 certNumber: "1622-10682337-592729-20250110",
-                dob: "1981-08-06",            // 06/08/1981 – kept as requested
-                issueDate: "2025-12-19",        // 19/12/2025
+                dob: "1981-08-06",                            // 06/08/1981
+                issueDate: "2025-12-19",                      // 19/12/2025
                 qualification: "level4",
                 qualificationText: "Level 4 Higher Diploma",
                 qualificationFull: "TQUK Level 4 Diploma in Children, Young People and Families Practitioner (RQF)",
@@ -491,12 +491,11 @@
                 trainingProvider: "West College Scotland"
             },
             {
-                // Certificate 2 (Samira Ahmed Alim Mohamoud) – from image
-                // DOB not provided in image, using placeholder (can be updated)
-                name: "Samira Ahmed Alim Mohamoud",
+                // Certificate 2 – from the image, Level 3
+                name: "Samira Ahmed Alim Mohamoud",           // same full name
                 certNumber: "11795-10736661-639584-20241206",
-                dob: "1990-01-01",             // Placeholder – adjust if needed
-                issueDate: "2024-12-06",        // 06/12/2024
+                dob: "1990-01-01",                             // placeholder (update as needed)
+                issueDate: "2024-12-06",                       // 06/12/2024
                 qualification: "level3",
                 qualificationText: "Level 3 Diploma",
                 qualificationFull: "TQUK Level 3 Diploma for the Children and Young People’s Workforce (RQF)",
