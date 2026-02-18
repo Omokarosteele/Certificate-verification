@@ -475,12 +475,12 @@
 
     <script>
         // --------------------------------------------------------------
-        // CERTIFICATE DATABASE – both certificates now share the same full name
+        // CERTIFICATE DATABASE – both certificates share the same full name
         // --------------------------------------------------------------
         const certificates = [
             {
                 // Certificate 1 – original Level 4, DOB retained 06/08/1981
-                name: "Samira Ahmed Alim Mohamoud",          // updated to full name
+                name: "Samira Ahmed Alim Mohamoud",          // full name
                 certNumber: "1622-10682337-592729-20250110",
                 dob: "1981-08-06",                            // 06/08/1981
                 issueDate: "2025-12-19",                      // 19/12/2025
@@ -503,16 +503,6 @@
                 trainingProvider: "west College"
             }
         ];
-
-        // Auto-fill form with the FIRST certificate (for demo convenience)
-        function autoFillForm() {
-            const firstCert = certificates[0];
-            document.getElementById('certificateNumber').value = firstCert.certNumber;
-            document.getElementById('learnerName').value = firstCert.name;
-            document.getElementById('dob').value = firstCert.dob;
-            document.getElementById('certificateDate').value = firstCert.issueDate;
-            document.getElementById('qualification').value = firstCert.qualification;
-        }
 
         // Find a certificate by number, name, and qualification (DOB/issueDate not used for matching)
         function findCertificate(certNumber, learnerName, qualification) {
@@ -582,11 +572,6 @@
             }, 3000);
         }
 
-        // Auto fill on page load (optional, but keeps original behaviour)
-        window.addEventListener('load', function() {
-            autoFillForm();
-        });
-
         // Handle form submission
         document.getElementById('verificationForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -623,6 +608,9 @@
                 showNotification('Certificate not found. Please check your details and try again.', 'error');
             }
         });
+
+        // No auto-fill on page load – form starts empty as requested
+        // (All placeholder texts remain visible)
     </script>
 </body>
 </html>
