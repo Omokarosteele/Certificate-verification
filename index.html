@@ -475,32 +475,31 @@
 
     <script>
         // --------------------------------------------------------------
-        // CERTIFICATE DATABASE – both certificates share the same full name
+        // CERTIFICATE DATABASE – both certificates share full name and provider
         // --------------------------------------------------------------
         const certificates = [
             {
-                // Certificate 1 – original Level 4, DOB retained 06/08/1981
-                name: "Samira Ahmed Alim Mohamoud",          // full name
+                // Certificate 1 – original Level 4, DOB stored but not shown
+                name: "Samira Ahmed Alim Mohamoud",
                 certNumber: "1622-10682337-592729-20250110",
-                dob: "1981-08-06",                            // 06/08/1981
-                issueDate: "2025-12-19",                      // 19/12/2025
+                // dob is kept for reference but success message uses input dob
+                dob: "1981-08-06",                 // stored, not displayed
+                issueDate: "2025-12-19",
                 qualification: "level4",
-                qualificationText: "Level 4 Higher Diploma",
                 qualificationFull: "TQUK Level 4 Diploma in Children, Young People and Families Practitioner (RQF)",
                 qualificationNumber: "601/5633/8",
-                trainingProvider: "West College Scotland"
+                trainingProvider: "west College Scotland"   // updated
             },
             {
-                // Certificate 2 – from the image, Level 3
-                name: "Samira Ahmed Alim Mohamoud",           // same full name
+                // Certificate 2 – from image, Level 3
+                name: "Samira Ahmed Alim Mohamoud",
                 certNumber: "11795-10736661-639584-20241206",
-                dob: "1990-01-01",                             // placeholder (update as needed)
-                issueDate: "2024-12-06",                       // 06/12/2024
+                dob: "1990-01-01",                  // placeholder (not shown)
+                issueDate: "2024-12-06",
                 qualification: "level3",
-                qualificationText: "Level 3 Diploma",
                 qualificationFull: "TQUK Level 3 Diploma for the Children and Young People’s Workforce (RQF)",
                 qualificationNumber: "601/7815/2",
-                trainingProvider: "west College"
+                trainingProvider: "west College Scotland"   // updated
             }
         ];
 
@@ -513,21 +512,22 @@
             ) || null;
         }
 
-        // Show success message for a matched certificate
-        function showSuccessMessage(cert) {
+        // Show success message for a matched certificate – uses USER‑ENTERED dob
+        function showSuccessMessage(cert, userDob, userIssueDate) {
             const successMessage = document.getElementById('successMessage');
             const verifiedDetails = document.getElementById('verifiedDetails');
             const verificationDateSpan = document.getElementById('verificationDate');
             const trainingProviderSpan = document.getElementById('trainingProvider');
 
-            // Format dates nicely
-            const issueDateObj = new Date(cert.issueDate + 'T00:00:00');
-            const formattedIssue = issueDateObj.toLocaleDateString('en-GB', {
+            // Format user‑entered date of birth nicely
+            const dobObj = new Date(userDob + 'T00:00:00');
+            const formattedDob = dobObj.toLocaleDateString('en-GB', {
                 day: 'numeric', month: 'long', year: 'numeric'
             });
 
-            const dobObj = new Date(cert.dob + 'T00:00:00');
-            const formattedDob = dobObj.toLocaleDateString('en-GB', {
+            // Format the issue date from the certificate (or could use userIssueDate)
+            const issueObj = new Date(cert.issueDate + 'T00:00:00');
+            const formattedIssue = issueObj.toLocaleDateString('en-GB', {
                 day: 'numeric', month: 'long', year: 'numeric'
             });
 
@@ -537,10 +537,10 @@
                 <strong>Qualification:</strong> ${cert.qualificationFull}<br>
                 <strong>Qualification Number:</strong> ${cert.qualificationNumber}<br>
                 <strong>Awarded On:</strong> ${formattedIssue}<br>
-                <strong>Date of Birth:</strong> ${formattedDob}
+                <strong>Date of Birth:</strong> ${formattedDob}   <!-- shows what user typed -->
             `;
 
-            trainingProviderSpan.textContent = cert.trainingProvider;
+            trainingProviderSpan.textContent = cert.trainingProvider; // now both "west College Scotland"
             verificationDateSpan.textContent = new Date().toLocaleDateString('en-GB', {
                 day: 'numeric', month: 'long', year: 'numeric'
             });
@@ -558,14 +558,12 @@
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
-            // set background based on type
             if (type === 'error') notification.style.backgroundColor = '#f44336';
             else if (type === 'warning') notification.style.backgroundColor = '#ff9800';
-            else notification.style.backgroundColor = '#4caf50'; // success (unused here)
+            else notification.style.backgroundColor = '#4caf50';
             
             document.body.appendChild(notification);
             
-            // Auto remove after 3 seconds
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-out';
                 setTimeout(() => notification.remove(), 300);
@@ -599,18 +597,18 @@
                 return;
             }
 
-            // Look for a matching certificate (only using certNumber, learnerName, qualification)
+            // Look for a matching certificate (using certNumber, learnerName, qualification)
             const matchedCert = findCertificate(certNumber, learnerName, qualification);
 
             if (matchedCert) {
-                showSuccessMessage(matchedCert);
+                // Pass the user‑entered dob to the success message
+                showSuccessMessage(matchedCert, dob, certDate);
             } else {
                 showNotification('Certificate not found. Please check your details and try again.', 'error');
             }
         });
 
-        // No auto-fill on page load – form starts completely empty
-        // (Only placeholder text appears, no pre-filled values)
+        // No auto-fill – form starts completely empty
     </script>
 </body>
 </html>
