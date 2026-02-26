@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate Verification — Training Qualifications UK</title>
+    <title>Certificate Verification — Training Qualifications UK (Level 3)</title>
     <style>
         * {
             margin: 0;
@@ -364,7 +364,7 @@
             </div>
             <div class="header-text">
                 <h1>Certificate Verification</h1>
-                <p>Training Qualifications UK</p>
+                <p>Training Qualifications UK — Level 3 only</p>
                 <div class="header-accent"></div>
             </div>
         </div>
@@ -409,8 +409,8 @@
         </div>
         
         <div class="form-section">
-            <h2>Verification Form</h2>
-            <p>Enter your certificate details below to verify its authenticity.</p>
+            <h2>Verification Form (Level 3 Demo)</h2>
+            <p>Enter your certificate details below to verify its authenticity. On page load, the form is autofilled with a valid Level 3 certificate and verified automatically.</p>
             
             <form id="verificationForm">
                 <div class="form-group">
@@ -475,31 +475,18 @@
 
     <script>
         // --------------------------------------------------------------
-        // CERTIFICATE DATABASE – both certificates share full name and provider
+        // SINGLE CERTIFICATE DATABASE – Level 3 only, DOB 6 August 1981
         // --------------------------------------------------------------
         const certificates = [
             {
-                // Certificate 1 – original Level 4, DOB stored but not shown
-                name: "Samira Ahmed Alim Mohamoud",
-                certNumber: "1622-10682337-592729-20250110",
-                // dob is kept for reference but success message uses input dob
-                dob: "1981-08-06",                 // stored, not displayed
-                issueDate: "2025-12-19",
-                qualification: "level4",
-                qualificationFull: "TQUK Level 4 Diploma in Children, Young People and Families Practitioner (RQF)",
-                qualificationNumber: "601/5633/8",
-                trainingProvider: "west College Scotland"   // updated
-            },
-            {
-                // Certificate 2 – from image, Level 3
                 name: "Samira Ahmed Alim Mohamoud",
                 certNumber: "11795-10736661-639584-20241206",
-                dob: "1990-01-01",                  // placeholder (not shown)
+                dob: "1981-08-06",                // updated to 6 August 1981
                 issueDate: "2024-12-06",
                 qualification: "level3",
                 qualificationFull: "TQUK Level 3 Diploma for the Children and Young People’s Workforce (RQF)",
                 qualificationNumber: "601/7815/2",
-                trainingProvider: "west College Scotland"   // updated
+                trainingProvider: "west College Scotland"
             }
         ];
 
@@ -540,7 +527,7 @@
                 <strong>Date of Birth:</strong> ${formattedDob}   <!-- shows what user typed -->
             `;
 
-            trainingProviderSpan.textContent = cert.trainingProvider; // now both "west College Scotland"
+            trainingProviderSpan.textContent = cert.trainingProvider;
             verificationDateSpan.textContent = new Date().toLocaleDateString('en-GB', {
                 day: 'numeric', month: 'long', year: 'numeric'
             });
@@ -608,7 +595,23 @@
             }
         });
 
-        // No auto-fill – form starts completely empty
+        // --------------------------------------------------------------
+        // AUTOFILL AND VERIFY ON PAGE LOAD (Level 3 certificate, DOB 1981-08-06)
+        // --------------------------------------------------------------
+        window.addEventListener('DOMContentLoaded', function() {
+            // Set form fields to match the single Level 3 certificate
+            document.getElementById('certificateNumber').value = "11795-10736661-639584-20241206";
+            document.getElementById('learnerName').value = "Samira Ahmed Alim Mohamoud";
+            document.getElementById('dob').value = "1981-08-06";      // updated to 6 August 1981
+            document.getElementById('certificateDate').value = "2024-12-06";
+            document.getElementById('qualification').value = "level3";
+
+            // Trigger the verification process (simulate form submit)
+            // Use a small delay to ensure everything is ready, though not strictly necessary
+            setTimeout(() => {
+                document.getElementById('verificationForm').dispatchEvent(new Event('submit'));
+            }, 100);
+        });
     </script>
 </body>
 </html>
