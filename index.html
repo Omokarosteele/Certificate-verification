@@ -229,7 +229,7 @@
         
         /* FOOTER IMAGE REDUCED TO 1/10 (from 300px to 30px) */
         .footer-image {
-            max-width: 50px;
+            max-width: 30px; /* Reduced to 1/10 of original 300px */
             height: auto;
             margin-bottom: 15px;
         }
@@ -295,7 +295,7 @@
             }
             
             .footer-image {
-                max-width: 25px;
+                max-width: 25px; /* Slightly smaller on mobile */
             }
             
             .header-accent {
@@ -325,7 +325,7 @@
             }
             
             .footer-image {
-                max-width: 20px;
+                max-width: 20px; /* Even smaller on very small screens */
             }
         }
         
@@ -364,7 +364,7 @@
             </div>
             <div class="header-text">
                 <h1>Certificate Verification</h1>
-                <p>Training Qualifications UK</p>   <!-- Removed " — Level 3 only" -->
+                <p>Training Qualifications UK</p>
                 <div class="header-accent"></div>
             </div>
         </div>
@@ -381,8 +381,7 @@
             <p>Certificate verification helps employers, educational institutions and other stakeholders have confidence in the credibility of your achievements.</p>
             
             <p>Fill your details into the form on the right to verify it in seconds.</p>
-
-            <p>OR scan the QR code on your certificate to verify.</p>
+            
             <div class="highlight-box">
                 <p><strong>Important Note:</strong> Only certificates issued from 2018 onwards can be checked below. If your certificate is dated before 2018, please contact our Customer Service Specialists, who can support you with verifying your certificate.</p>
             </div>
@@ -394,7 +393,6 @@
                     <li style="margin-bottom: 10px;">Ensure name matches exactly as shown on certificate</li>
                     <li style="margin-bottom: 10px;">Check the issue date on your certificate</li>
                     <li style="margin-bottom: 10px;">Select the correct qualification type from the dropdown</li>
-                    <li style="margin-bottom: 10px;"> OR scan the QR code on your certificate to verify</li>
                 </ul>
             </div>
             
@@ -409,8 +407,8 @@
         </div>
         
         <div class="form-section">
-            <h2>Verification Form</h2>   <!-- Removed "(Level 3 Demo)" -->
-            <p>Enter your certificate details below to verify its authenticity. On page load, the form is autofilled with a valid Level 3 certificate and verified automatically.</p>
+            <h2>Verification Form</h2>
+            <p>Enter your certificate details below to verify its authenticity.</p>
             
             <form id="verificationForm">
                 <div class="form-group">
@@ -460,7 +458,7 @@
         <img src="foot.png" alt="TQUK Footer" class="footer-image">
         
         <p>Training Qualifications UK</p>
-        <p class="contact-info">Email: supports@tquk.org | Phone: +44 (0)3338593344 </p>
+        <p class="contact-info">Email: support@tquk.org | Phone: +44 (0)1234 567890</p>
         
         <div class="footer-links">
             <a href="#">Privacy Policy</a>
@@ -474,144 +472,159 @@
     </div>
 
     <script>
-        // --------------------------------------------------------------
-        // SINGLE CERTIFICATE DATABASE – Level 3 only, DOB 6 August 1981
-        // --------------------------------------------------------------
-        const certificates = [
-            {
-                name: "Samira Ahmed Alim Mohamoud",
-                certNumber: "11795-10736661-639584-20241206",
-                dob: "1981-08-06",                // updated to 6 August 1981
-                issueDate: "2024-12-06",
-                qualification: "level3",
-                qualificationFull: "TQUK Level 3 Diploma for the Children and Young People’s Workforce (RQF)",
-                qualificationNumber: "601/7815/2",
-                trainingProvider: "west College Scotland"
-            }
-        ];
-
-        // Find a certificate by number, name, and qualification (DOB/issueDate not used for matching)
-        function findCertificate(certNumber, learnerName, qualification) {
-            return certificates.find(cert => 
-                cert.certNumber === certNumber && 
-                cert.name === learnerName && 
-                cert.qualification === qualification
-            ) || null;
+        // SAMIRA AHMED'S CERTIFICATE DETAILS
+        const samiraAhmedCertificate = {
+            name: "Samira Ahmed Alim Mohamoud",
+            certNumber: "1622-10682337-592729-20250110",
+            dob: "1981-08-06", // August 6th 1981
+            issueDate: "2025-12-19", // 19/12/2025
+            qualification: "level4", // This is the VALUE for Level 4 Higher Diploma
+            qualificationText: "Level 4 Higher Diploma", // This is the TEXT for display
+            qualificationFull: "TQUK Level 4 Diploma in Children, Young People and Families Practitioner (RQF)",
+            qualificationNumber: "601/5633/8",
+            trainingProvider: "West College Scotland"
+        };
+        
+        // Function to auto-fill the form with Samira's details
+        function autoFillForm() {
+            // Fill form fields
+            document.getElementById('certificateNumber').value = samiraAhmedCertificate.certNumber;
+            document.getElementById('learnerName').value = samiraAhmedCertificate.name;
+            document.getElementById('dob').value = samiraAhmedCertificate.dob;
+            document.getElementById('certificateDate').value = samiraAhmedCertificate.issueDate;
+            
+            // Set qualification to Level 4 Higher Diploma
+            document.getElementById('qualification').value = samiraAhmedCertificate.qualification;
         }
-
-        // Show success message for a matched certificate – uses USER‑ENTERED dob
-        function showSuccessMessage(cert, userDob, userIssueDate) {
+        
+        // Check if certificate is valid
+        function isCertificateValid(certNumber, learnerName, qualification) {
+            return certNumber === samiraAhmedCertificate.certNumber && 
+                   learnerName === samiraAhmedCertificate.name &&
+                   qualification === samiraAhmedCertificate.qualification;
+        }
+        
+        // Show success message
+        function showSuccessMessage() {
             const successMessage = document.getElementById('successMessage');
             const verifiedDetails = document.getElementById('verifiedDetails');
-            const verificationDateSpan = document.getElementById('verificationDate');
-            const trainingProviderSpan = document.getElementById('trainingProvider');
-
-            // Format user‑entered date of birth nicely
-            const dobObj = new Date(userDob + 'T00:00:00');
-            const formattedDob = dobObj.toLocaleDateString('en-GB', {
-                day: 'numeric', month: 'long', year: 'numeric'
-            });
-
-            // Format the issue date from the certificate (or could use userIssueDate)
-            const issueObj = new Date(cert.issueDate + 'T00:00:00');
-            const formattedIssue = issueObj.toLocaleDateString('en-GB', {
-                day: 'numeric', month: 'long', year: 'numeric'
-            });
-
+            const verificationDate = document.getElementById('verificationDate');
+            const trainingProvider = document.getElementById('trainingProvider');
+            
             verifiedDetails.innerHTML = `
-                <strong>Certificate Holder:</strong> ${cert.name}<br>
-                <strong>Certificate Number:</strong> ${cert.certNumber}<br>
-                <strong>Qualification:</strong> ${cert.qualificationFull}<br>
-                <strong>Qualification Number:</strong> ${cert.qualificationNumber}<br>
-                <strong>Awarded On:</strong> ${formattedIssue}<br>
-                <strong>Date of Birth:</strong> ${formattedDob}   <!-- shows what user typed -->
+                <strong>Certificate Holder:</strong> ${samiraAhmedCertificate.name}<br>
+                <strong>Certificate Number:</strong> ${samiraAhmedCertificate.certNumber}<br>
+                <strong>Qualification:</strong> ${samiraAhmedCertificate.qualificationFull}<br>
+                <strong>Qualification Number:</strong> ${samiraAhmedCertificate.qualificationNumber}<br>
+                <strong>Awarded On:</strong> December 19, 2025<br>
+                <strong>Date of Birth:</strong> August 6, 1981
             `;
-
-            trainingProviderSpan.textContent = cert.trainingProvider;
-            verificationDateSpan.textContent = new Date().toLocaleDateString('en-GB', {
-                day: 'numeric', month: 'long', year: 'numeric'
+            
+            trainingProvider.textContent = samiraAhmedCertificate.trainingProvider;
+            verificationDate.textContent = new Date().toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
             });
-
+            
             successMessage.style.display = 'block';
-
-            // Smooth scroll to the success message
+            
+            // Scroll to success message
             setTimeout(() => {
                 successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 500);
         }
-
-        // Simple notification system
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            if (type === 'error') notification.style.backgroundColor = '#f44336';
-            else if (type === 'warning') notification.style.backgroundColor = '#ff9800';
-            else notification.style.backgroundColor = '#4caf50';
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-out';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        // Handle form submission
+        
+        // Form submission
         document.getElementById('verificationForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
-            // Hide any previous success message
-            document.getElementById('successMessage').style.display = 'none';
-
-            // Get form values
-            const certNumber = document.getElementById('certificateNumber').value.trim();
-            const learnerName = document.getElementById('learnerName').value.trim();
+            
+            const certNumber = document.getElementById('certificateNumber').value;
+            const learnerName = document.getElementById('learnerName').value;
             const dob = document.getElementById('dob').value;
             const certDate = document.getElementById('certificateDate').value;
             const qualification = document.getElementById('qualification').value;
-
-            // Basic validation
+            
+            // Simple validation
             if (!certNumber || !learnerName || !dob || !certDate || !qualification) {
                 showNotification('Please fill in all required fields.', 'error');
                 return;
             }
-
-            // Check issue date is not before 2018
+            
+            // Check if certificate date is before 2018
             const certYear = new Date(certDate).getFullYear();
             if (certYear < 2018) {
                 showNotification('Certificates issued before 2018 cannot be verified through this system. Please contact our Customer Service Specialists for assistance.', 'warning');
                 return;
             }
-
-            // Look for a matching certificate (using certNumber, learnerName, qualification)
-            const matchedCert = findCertificate(certNumber, learnerName, qualification);
-
-            if (matchedCert) {
-                // Pass the user‑entered dob to the success message
-                showSuccessMessage(matchedCert, dob, certDate);
-            } else {
-                showNotification('Certificate not found. Please check your details and try again.', 'error');
-            }
-        });
-
-        // --------------------------------------------------------------
-        // AUTOFILL AND VERIFY ON PAGE LOAD (Level 3 certificate, DOB 1981-08-06)
-        // --------------------------------------------------------------
-        window.addEventListener('DOMContentLoaded', function() {
-            // Set form fields to match the single Level 3 certificate
-            document.getElementById('certificateNumber').value = "11795-10736661-639584-20241206";
-            document.getElementById('learnerName').value = "Samira Ahmed Alim Mohamoud";
-            document.getElementById('dob').value = "1981-08-06";      // updated to 6 August 1981
-            document.getElementById('certificateDate').value = "2024-12-06";
-            document.getElementById('qualification').value = "level3";
-
-            // Trigger the verification process (simulate form submit)
-            // Use a small delay to ensure everything is ready, though not strictly necessary
+            
+            // Simulate verification
+            showNotification('Verifying certificate... Please wait.', 'info');
+            
             setTimeout(() => {
-                document.getElementById('verificationForm').dispatchEvent(new Event('submit'));
-            }, 100);
+                if (isCertificateValid(certNumber, learnerName, qualification)) {
+                    // Show success message
+                    showSuccessMessage();
+                    
+                    showNotification(`Certificate #${certNumber} verified successfully! This certificate is valid and authentic.`, 'success');
+                } else {
+                    showNotification(`Certificate #${certNumber} could not be verified. Please check the details and try again, or contact support.`, 'error');
+                }
+            }, 1500);
         });
+        
+        // Date restrictions
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('certificateDate').setAttribute('max', today);
+        
+        const minDOB = new Date();
+        minDOB.setFullYear(minDOB.getFullYear() - 100);
+        document.getElementById('dob').setAttribute('min', minDOB.toISOString().split('T')[0]);
+        document.getElementById('dob').setAttribute('max', today);
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-fill form with Samira's details
+            autoFillForm();
+            
+            // Auto-validate after 1 second
+            setTimeout(() => {
+                // Submit the form automatically
+                document.getElementById('verificationForm').dispatchEvent(new Event('submit'));
+            }, 1000);
+        });
+        
+        // Notification function
+        function showNotification(message, type) {
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `notification`;
+            notification.textContent = message;
+            
+            // Set color based on type
+            if (type === 'success') {
+                notification.style.backgroundColor = '#28a745';
+            } else if (type === 'error') {
+                notification.style.backgroundColor = '#dc3545';
+            } else if (type === 'warning') {
+                notification.style.backgroundColor = '#ffc107';
+                notification.style.color = '#212529';
+            } else {
+                notification.style.backgroundColor = '#17a2b8';
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
     </script>
 </body>
 </html>
